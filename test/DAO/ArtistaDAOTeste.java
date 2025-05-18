@@ -1,5 +1,4 @@
 
-// src/test/java/DAO/ArtistaDAOTest.java
 package DAO;
 
 import connection.ConnectionBD;
@@ -7,7 +6,7 @@ import model.Artista;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.AfterClass; // Para fechar a conexão
+import org.junit.AfterClass; 
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,13 +20,13 @@ public class ArtistaDAOTeste {
     private static Connection conn;
 
     @BeforeClass
-    public static void setUpClass() throws SQLException { // SQLException ainda pode ocorrer aqui do ConnectionBD ou Statement
+    public static void setUpClass() throws SQLException { 
         conn = ConnectionBD.getInstance().getConnection();
         assertNotNull("A conexão com o banco de dados não pôde ser estabelecida.", conn);
-        dao = new ArtistaDAO(); // Construtor não lança mais SQLException
+        dao = new ArtistaDAO(); 
 
         try (Statement stmt = conn.createStatement()) {
-            // Ajustado para ser compatível com o ArtistaDAO.save() que insere apenas 'nome'
+           
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS pessoa (
                   id SERIAL PRIMARY KEY,
@@ -48,9 +47,9 @@ public class ArtistaDAOTeste {
     }
 
     @Before
-    public void cleanUp() throws SQLException { // SQLException do Statement
+    public void cleanUp() throws SQLException { 
         try (Statement stmt = conn.createStatement()) {
-            // A ordem importa devido à FK. Artista primeiro.
+           
             stmt.execute("TRUNCATE TABLE artista CASCADE");
             stmt.execute("TRUNCATE TABLE pessoa  CASCADE");
         }
@@ -59,36 +58,26 @@ public class ArtistaDAOTeste {
     @AfterClass
     public static void tearDownClass() throws SQLException {
         if (conn != null && !conn.isClosed()) {
-            // Limpar tabelas após todos os testes
+            
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute("TRUNCATE TABLE artista CASCADE");
                 stmt.execute("TRUNCATE TABLE pessoa CASCADE");
-                // Opcional: DROP TABLES IF EXISTS pessoa, artista;
+               
             }
             conn.close();
         }
-        // Se o DAO gerenciasse sua própria conexão e tivesse um método close:
-        // if (dao != null) {
-        //     dao.closeConnection();
-        // }
+      
     }
 
     @Test
     public void testSaveAndFindById() {
-        // O construtor do Artista no teste (com sobrenome, idade) é mais completo
-        // que o usado internamente pelo converteParaArtista do DAO.
-        // Para o DAO atual, apenas nome, nomeArtistico e genero são usados de 'Artista a'.
-        Artista novo = new Artista("JDoe", "Rock", 0, "John"/*, "Doe", 30*/); // Ajustado para o construtor do DAO
-                                                                                // ou assumindo um construtor que só usa esses.
-                                                                                // Se o Artista model tiver sobrenome e idade,
-                                                                                // e o DAO devesse usá-los, o DAO.save() precisaria mudar.
-                                                                                // Por ora, vamos assumir que o Artista passado ao DAO
-                                                                                // só precisa ter os campos que o DAO utiliza.
+        Artista novo = new Artista("JDoe", "Rock", 0, "John"/*, "Doe", 30*/); 
+                                                                               
 
         Artista salvo = dao.save(novo);
         assertNotNull("save() não deve retornar null em caso de sucesso", salvo);
         assertTrue("ID deve ser > 0 após salvar", salvo.getId() > 0);
-        assertEquals("Nome do artista não corresponde", "John", salvo.getNome()); // Verificar se o nome real foi salvo
+        assertEquals("Nome do artista não corresponde", "John", salvo.getNome()); 
         assertEquals("Nome artístico não corresponde", "JDoe", salvo.getNomeArtistico());
         assertEquals("Gênero não corresponde", "Rock", salvo.getGenero());
 
@@ -103,20 +92,14 @@ public class ArtistaDAOTeste {
 
     @Test
     public void testSaveComFalhaPessoaIdNaoGerado() {
-        // Este teste é mais difícil de simular sem mockar o PreparedStatement
-        // para forçar o getGeneratedKeys a não retornar nada.
-        // Com a estrutura atual, uma falha no getGeneratedKeys fará o save retornar null.
-        // Aqui, vamos assumir que se `save` retorna null, algo deu errado.
-        // O teste específico de "Falha ao obter ID" já está coberto pela lógica do DAO
-        // que retorna null. Se precisarmos testar essa condição explicitamente,
-        // precisaríamos de um controle mais fino sobre a execução do SQL (ex: Mocks).
+        
         System.out.println("Teste 'testSaveComFalhaPessoaIdNaoGerado' é conceitual para o DAO atual.");
     }
 
 
     @Test
     public void testFindByIdNaoExistente() {
-        Artista naoExistente = dao.findById(9999); // Um ID que certamente não existe
+        Artista naoExistente = dao.findById(9999); 
         assertNull("findById() deve retornar null para artista não existente", naoExistente);
     }
 
@@ -140,7 +123,7 @@ public class ArtistaDAOTeste {
         assertEquals("findByGenero('Pop') deve retornar 1 artista", 1, pops.size());
         assertEquals("Nome artístico do artista pop não corresponde", "Alicia", pops.get(0).getNomeArtistico());
 
-        List<Artista> jazz = dao.findByGenero("Jazz"); // Gênero não existente
+        List<Artista> jazz = dao.findByGenero("Jazz"); 
         assertNotNull("findByGenero() para gênero não existente não deve retornar null", jazz);
         assertTrue("findByGenero() deve retornar lista vazia para gênero não existente", jazz.isEmpty());
     }
@@ -151,9 +134,9 @@ public class ArtistaDAOTeste {
         Artista salvo = dao.save(artistaOriginal);
         assertNotNull("Artista original não foi salvo para o teste de update", salvo);
 
-        // Modifica o objeto retornado pelo save (que já tem o ID correto)
+        
         salvo.setGenero("Rap Alternativo");
-        salvo.setNome("Carlton Banks"); // Supondo que Artista tenha setNome para o nome real
+        salvo.setNome("Carlton Banks"); 
         salvo.setNomeArtistico("Fresh C");
 
         Artista atualizado = dao.update(salvo);
@@ -172,16 +155,10 @@ public class ArtistaDAOTeste {
     @Test
     public void testUpdateArtistaNaoExistente() {
         Artista naoExistente = new Artista("Fantasma", "Blues", 999, "Desconhecido"/*, "N。", 100*/);
-        // O update no DAO modificado tentará executar os UPDATEs.
-        // Se o ID não existir, nenhuma linha será afetada, mas o DAO não lança exceção.
-        // O DAO modificado retorna o objeto passado como parâmetro se não houver SQLException,
-        // ou null se houver SQLException. Sem mock, é difícil testar o "não afetou linhas"
-        // a não ser que o update retornasse boolean ou número de linhas afetadas.
-        // Com o retorno atual (Artista ou null), assumimos que se não houve SQLException,
-        // ele retorna o objeto 'a'.
+        
         Artista resultadoUpdate = dao.update(naoExistente);
         assertNotNull("Update em artista não existente não deveria lançar exceção SQL e retornar o objeto passado", resultadoUpdate);
-        // Para verificar que nada mudou, precisaríamos de um findById.
+       
         assertNull("findById para artista não existente (após tentativa de update) deve ser null", dao.findById(9999));
     }
 
@@ -201,9 +178,8 @@ public class ArtistaDAOTeste {
 
     @Test
     public void testDeleteNaoExistente() {
-        // O método delete no DAO modificado não lança exceção se o ID não existe (0 linhas afetadas).
-        // Ele retorna true se o commit for bem-sucedido, ou false se houver SQLException.
-        boolean resultadoDelete = dao.delete(8888); // ID não existente
+        
+        boolean resultadoDelete = dao.delete(8888); 
         assertTrue("delete() para ID não existente deve retornar true (nenhuma exceção SQL, commit ok)", resultadoDelete);
     }
 
