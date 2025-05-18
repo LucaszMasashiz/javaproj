@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class MusicaDAOTest {
+public class MusicaDAOTeste {
     private static MusicaDAO musicaDAO;
     private static ArtistaDAO artistaDAO; // Para gerenciar artistas de teste
     private static Connection conn;
