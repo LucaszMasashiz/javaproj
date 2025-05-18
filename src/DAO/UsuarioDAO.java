@@ -275,7 +275,7 @@ public class UsuarioDAO {
             int senha = rs.getInt("senha"); 
             return new Usuario(id, email, senha, nome);
         } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, "Erro ao converter ResultSet para Usuario.", ex);
+            LOGGER.log(Level.SEVERE, "Erro ao converter para Usuario.", ex);
             return null;
         }
     }
@@ -290,4 +290,31 @@ public class UsuarioDAO {
             }
         }
     }
+    public Usuario authenticate(String email, String senha) {
+    if (this.conn == null) {
+        LOGGER.severe("Operação authenticate (Usuario) não pode ser executada: conexão indisponível.");
+        return null;
+    }
+
+    String sql = """
+        SELECT p.id, p.nome, u.email, u.senha
+        FROM pessoa p
+        JOIN usuario u ON p.id = u.id
+        WHERE u.email = ? AND u.senha = ?
+    """;
+
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, email);
+        ps.setString(2, senha);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return converteParaUsuario(rs);
+            }
+        }
+    } catch (SQLException ex) {
+        LOGGER.log(Level.SEVERE, "Erro ao autenticar Usuario com email: " + email, ex);
+    }
+    return null;
+    }
+
 }

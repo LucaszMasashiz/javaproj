@@ -4,12 +4,21 @@
  */
 package view;
 
+import DAO.UsuarioDAO;
+import java.sql.Connection;
+import connection.ConnectionBD;
+import java.lang.System.Logger;
+import javax.swing.JOptionPane;
+import static junit.runner.Version.id;
+import java.sql.SQLException;
+import model.Usuario;
+
 /**
  *
  * @author Masashi
  */
 public class Cadastro extends javax.swing.JFrame {
-
+     
     /**
      * Creates new form Cadastro
      */
@@ -27,11 +36,40 @@ public class Cadastro extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nomeCadastro = new javax.swing.JTextField();
+        botaoCadastro = new javax.swing.JToggleButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        emailCadastro = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        senhaCadastro = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Cadastro");
+        jLabel1.setFont(new java.awt.Font("Perpetua Titling MT", 3, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("spotifei");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        nomeCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomeCadastroActionPerformed(evt);
+            }
+        });
+
+        botaoCadastro.setText("Cadastrar");
+        botaoCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCadastroActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel2.setText("Nome:");
+
+        jLabel3.setText("email");
+
+        jLabel4.setText("senha");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -40,25 +78,131 @@ public class Cadastro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(225, 225, 225)
-                        .addComponent(jLabel1))
+                        .addGap(216, 216, 216)
+                        .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(265, Short.MAX_VALUE))
+                        .addGap(137, 137, 137)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nomeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(218, 218, 218)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(146, 146, 146)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(senhaCadastro)
+                                .addComponent(emailCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(188, 188, 188)
+                            .addComponent(botaoCadastro))))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jLabel1)
-                .addGap(71, 71, 71)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(465, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(nomeCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(emailCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(senhaCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(botaoCadastro)
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void nomeCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeCadastroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nomeCadastroActionPerformed
+
+    private void botaoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastroActionPerformed
+        String nome = nomeCadastro.getText().trim();
+        String email = emailCadastro.getText().trim();
+        char[] senhaChars = senhaCadastro.getPassword();
+        String senhaStr = new String(senhaChars);
+
+        if (nome.isEmpty() || email.isEmpty() || senhaStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos os campos são obrigatórios!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+            java.util.Arrays.fill(senhaChars, ' '); 
+            return;
+        }
+
+        int senha;
+        try {
+            senha = Integer.parseInt(senhaStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Senha deve ser um número válido (temporariamente).", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
+            java.util.Arrays.fill(senhaChars, ' '); 
+            return;
+        }
+
+        Usuario novoUsuario = new Usuario(nome, senha, email);
+        Connection conn = null;
+        try {
+            conn = ConnectionBD.getInstance().getConnection();
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            Usuario usuarioSalvo = usuarioDAO.save(novoUsuario);
+
+            if (usuarioSalvo != null) {
+                JOptionPane.showMessageDialog(this,
+                        "Usuário '" + usuarioSalvo.getNome() + "' cadastrado com sucesso!\nID: " + usuarioSalvo.getId(),
+                        "Cadastro Realizado",
+                        JOptionPane.INFORMATION_MESSAGE);
+                nomeCadastro.setText("");
+                emailCadastro.setText("");
+                senhaCadastro.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Falha ao cadastrar usuário. Verifique o console para mais detalhes, se houver.",
+                        "Erro no Cadastro",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            
+            JOptionPane.showMessageDialog(this,
+                    "Erro de banco de dados: " + e.getMessage(),
+                    "Erro Crítico",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); 
+        } catch (Exception e) {
+           
+            JOptionPane.showMessageDialog(this,
+                    "Ocorreu um erro inesperado: " + e.getMessage(),
+                    "Erro Inesperado",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        } finally {
+            java.util.Arrays.fill(senhaChars, ' ');
+
+            if (conn != null) {
+                try {
+                    conn.close();
+                    
+                } catch (SQLException e) {
+                   
+                    System.err.println("Erro ao fechar a conexão com o banco: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }
+    }//GEN-LAST:event_botaoCadastroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -96,7 +240,13 @@ public class Cadastro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton botaoCadastro;
+    private javax.swing.JTextField emailCadastro;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField nomeCadastro;
+    private javax.swing.JPasswordField senhaCadastro;
     // End of variables declaration//GEN-END:variables
 }

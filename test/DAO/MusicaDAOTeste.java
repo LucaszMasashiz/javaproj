@@ -19,9 +19,9 @@ import static org.junit.Assert.*;
 
 public class MusicaDAOTeste {
     private static MusicaDAO musicaDAO;
-    private static ArtistaDAO artistaDAO; // Para gerenciar artistas de teste
+    private static ArtistaDAO artistaDAO; 
     private static Connection conn;
-    private static int idArtistaTeste; // Para armazenar o ID de um artista de teste
+    private static int idArtistaTeste; 
 
     @BeforeClass
     public static void setUpClass() throws SQLException {
@@ -29,17 +29,17 @@ public class MusicaDAOTeste {
         assertNotNull("A conexão com o banco de dados não pôde ser estabelecida.", conn);
 
         musicaDAO = new MusicaDAO();
-        artistaDAO = new ArtistaDAO(); // DAO para criar artista de referência
+        artistaDAO = new ArtistaDAO(); 
 
         try (Statement stmt = conn.createStatement()) {
-            // Cria tabela pessoa (dependência para Artista)
+            
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS pessoa (
                   id SERIAL PRIMARY KEY,
                   nome VARCHAR(100) NOT NULL
                 )
             """);
-            // Cria tabela artista (dependência para Musica)
+            
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS artista (
                   id INT PRIMARY KEY,
@@ -48,7 +48,7 @@ public class MusicaDAOTeste {
                   FOREIGN KEY (id) REFERENCES pessoa(id) ON DELETE CASCADE
                 )
             """);
-            // Cria tabela musica
+            
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS musica (
                   id SERIAL PRIMARY KEY,
@@ -61,7 +61,7 @@ public class MusicaDAOTeste {
             """);
         }
 
-        // Criar um artista de teste para usar nas músicas
+     
         Artista artistaDeTeste = new Artista("Artista Teste Mus", "Indie", 0, "Nome Real Artista Mus");
         Artista artistaSalvo = artistaDAO.save(artistaDeTeste);
         assertNotNull("Artista de teste não pôde ser salvo", artistaSalvo);
@@ -72,10 +72,9 @@ public class MusicaDAOTeste {
     @Before
     public void cleanUp() throws SQLException {
         try (Statement stmt = conn.createStatement()) {
-            // Limpar musicas primeiro devido à FK
+            
             stmt.execute("TRUNCATE TABLE musica CASCADE");
-            // Não vamos limpar artistas e pessoas aqui para manter o idArtistaTeste válido entre os testes de música.
-            // Se cada teste de música precisasse de um artista novo/limpo, a lógica seria diferente.
+            
         }
     }
 
@@ -83,7 +82,7 @@ public class MusicaDAOTeste {
     public static void tearDownClass() throws SQLException {
         if (conn != null && !conn.isClosed()) {
             try (Statement stmt = conn.createStatement()) {
-                // Limpeza final completa
+                
                 stmt.execute("TRUNCATE TABLE musica CASCADE");
                 stmt.execute("TRUNCATE TABLE artista CASCADE");
                 stmt.execute("TRUNCATE TABLE pessoa CASCADE");
@@ -100,7 +99,7 @@ public class MusicaDAOTeste {
 
     @Test
     public void testSaveAndFindById() {
-        // ID da música é 0 porque esperamos que seja auto-gerado
+        
         Musica novaMusica = new Musica(0, idArtistaTeste, "Canção Teste", "Pop Experimental", "Album X");
         
         Musica salva = musicaDAO.save(novaMusica);
@@ -119,8 +118,7 @@ public class MusicaDAOTeste {
 
     @Test
     public void testSaveComArtistaInexistenteDeveFalhar() {
-        // Tentar salvar música com um artista_id que não existe na tabela artista
-        // O banco de dados deve rejeitar devido à constraint de FK
+       
         Musica musicaComArtistaRuim = new Musica(0, 99999, "Musica Fantasma", "Desconhecido", "Nenhum");
         Musica salva = musicaDAO.save(musicaComArtistaRuim);
         assertNull("save() deve retornar null ao tentar salvar música com artista_id inválido", salva);
@@ -150,7 +148,7 @@ public class MusicaDAOTeste {
     
     @Test
     public void testFindByArtistaId() {
-        // Criar um segundo artista para garantir que o filtro funciona
+        
         Artista outroArtista = new Artista("Outro Artista Mus", "Jazz", 0, "Nome Real Outro");
         Artista outroArtistaSalvo = artistaDAO.save(outroArtista);
         assertNotNull(outroArtistaSalvo);
@@ -184,13 +182,13 @@ public class MusicaDAOTeste {
     public void testFindByGenero() {
         Musica musicaPop1 = new Musica(0, idArtistaTeste, "Pop Song 1", "Pop", "Pop Album");
         Musica musicaRock = new Musica(0, idArtistaTeste, "Rock Anthem", "Rock", "Rock Hits");
-        Musica musicaPop2 = new Musica(0, idArtistaTeste, "Another Pop", "pop", "Pop Album 2"); // Gênero em minúsculas
+        Musica musicaPop2 = new Musica(0, idArtistaTeste, "Another Pop", "pop", "Pop Album 2"); 
 
         assertNotNull(musicaDAO.save(musicaPop1));
         assertNotNull(musicaDAO.save(musicaRock));
         assertNotNull(musicaDAO.save(musicaPop2));
 
-        List<Musica> musicasPop = musicaDAO.findByGenero("Pop"); // ILIKE deve pegar "Pop" e "pop"
+        List<Musica> musicasPop = musicaDAO.findByGenero("Pop"); 
         assertNotNull(musicasPop);
         assertEquals("Deve encontrar 2 músicas do gênero Pop (case insensitive)", 2, musicasPop.size());
         for (Musica m : musicasPop) {
@@ -210,7 +208,7 @@ public class MusicaDAOTeste {
         salva.setNome("Musica Atualizada");
         salva.setGenero("Folk Rock");
         salva.setAlbum("Novo Album Folk");
-        // Não vamos mudar o artistaId aqui, mas poderia ser testado
+       
 
         Musica atualizada = musicaDAO.update(salva);
         assertNotNull("update() não deve retornar null em caso de sucesso", atualizada);

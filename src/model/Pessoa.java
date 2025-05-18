@@ -9,7 +9,6 @@ package model;
  * @author Masashi
  */
 public class Pessoa {
-    
     protected int id;
     protected  String nome;
 

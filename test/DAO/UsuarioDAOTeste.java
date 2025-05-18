@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
+/**                                                                           
  *
  * @author Masashi
  */
@@ -80,7 +80,7 @@ public class UsuarioDAOTeste {
 
     @Test
     public void testSaveAndFindById() {
-        Usuario novoUsuario = new Usuario(0, "teste@exemplo.com", 12345, "Usuario Teste");
+        Usuario novoUsuario = new Usuario(4, "teste@exemplo.com", 12345, "Usuario Teste");
         
         Usuario salvo = dao.save(novoUsuario);
         assertNotNull("save() não deve retornar null em caso de sucesso", salvo);
@@ -99,11 +99,11 @@ public class UsuarioDAOTeste {
 
     @Test
     public void testSaveComEmailDuplicadoDeveFalhar() {
-        Usuario usuario1 = new Usuario(0, "duplicado@exemplo.com", 111, "Usuario Um");
+        Usuario usuario1 = new Usuario(23, "duplicado@exemplo.com", 111,"Usuario Um");
         Usuario salvo1 = dao.save(usuario1);
         assertNotNull("Primeiro usuário com email duplicado deveria ser salvo", salvo1);
 
-        Usuario usuario2 = new Usuario(0, "duplicado@exemplo.com", 222, "Usuario Dois");
+        Usuario usuario2 = new Usuario(21, "duplicado@exemplo.com", 222, "Usuario Dois");
         Usuario salvo2 = dao.save(usuario2); // Deve falhar devido à constraint UNIQUE no email
         assertNull("save() deve retornar null ao tentar salvar usuário com email duplicado", salvo2);
     }
@@ -116,7 +116,7 @@ public class UsuarioDAOTeste {
     
     @Test
     public void testFindByEmail() {
-        Usuario usuario = new Usuario(0, "busca.email@exemplo.com", 789, "Buscador Email");
+        Usuario usuario = new Usuario(2, "busca.email@exemplo.com", 789,"Buscador Email");
         Usuario salvo = dao.save(usuario);
         assertNotNull("Usuário para teste de findByEmail não foi salvo", salvo);
 
@@ -133,8 +133,8 @@ public class UsuarioDAOTeste {
     public void testFindAll() {
         assertTrue("findAll() deve retornar lista vazia inicialmente", dao.findAll().isEmpty());
 
-        Usuario usuario1 = new Usuario(0, "user1@exemplo.com", 123, "User Um");
-        Usuario usuario2 = new Usuario(0, "user2@exemplo.com", 456, "User Dois");
+        Usuario usuario1 = new Usuario(15, "user1@exemplo.com", 124, "User Um");
+        Usuario usuario2 = new Usuario(18, "user2@exemplo.com", 456, "User Dois");
         
         assertNotNull(dao.save(usuario1));
         assertNotNull(dao.save(usuario2));
@@ -146,7 +146,7 @@ public class UsuarioDAOTeste {
 
     @Test
     public void testUpdate() {
-        Usuario original = new Usuario(0, "original@exemplo.com", 111, "Original Nome");
+        Usuario original = new Usuario(8, "original@exemplo.com", 111, "Original Nome");
         Usuario salvo = dao.save(original);
         assertNotNull("Usuário original não foi salvo para o teste de update", salvo);
 
@@ -169,8 +169,8 @@ public class UsuarioDAOTeste {
 
     @Test
     public void testUpdateParaEmailDuplicadoDeveFalhar() {
-        Usuario usuario1 = new Usuario(0, "email1.update@exemplo.com", 101, "Update Um");
-        Usuario usuario2 = new Usuario(0, "email2.update@exemplo.com", 102, "Update Dois");
+        Usuario usuario1 = new Usuario(54, "email1.update@exemplo.com", 101, "Update Um");
+        Usuario usuario2 = new Usuario(73, "email2.update@exemplo.com", 102, "Update Dois");
 
         Usuario salvo1 = dao.save(usuario1);
         Usuario salvo2 = dao.save(usuario2);
@@ -191,7 +191,7 @@ public class UsuarioDAOTeste {
 
     @Test
     public void testDelete() {
-        Usuario usuarioParaDeletar = new Usuario(0, "deletar@exemplo.com", 777, "Para Deletar");
+        Usuario usuarioParaDeletar = new Usuario(66, "deletar@exemplo.com", 777, "Para Deletar");
         Usuario salvo = dao.save(usuarioParaDeletar);
         assertNotNull("Usuário não foi salvo para o teste de delete", salvo);
 
