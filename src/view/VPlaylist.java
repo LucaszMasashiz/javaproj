@@ -21,9 +21,7 @@ public class VPlaylist extends javax.swing.JFrame {
     protected int usuarioId;
     protected PlaylistController playlistController = new PlaylistController();
     Usuario usuarioAutenticado = null;
-    /**
-     * Creates new form Playlist
-     */
+    
     public VPlaylist() {
         initComponents();
         usuarioAutenticado = ManagerSession.getInstance().getCurrentUser();

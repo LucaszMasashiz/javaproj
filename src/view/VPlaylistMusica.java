@@ -4,11 +4,13 @@
  */
 package view;
 
+import controller.ArtistaController;
 import controller.MusicaController;
 import controller.PlaylistMusicaController;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import manager.ManagerSession;
+import model.Artista;
 import model.Musica;
 import model.Usuario;
 
@@ -17,32 +19,28 @@ import model.Usuario;
  * @author Masashi
  */
 public class VPlaylistMusica extends javax.swing.JFrame {
+    protected Usuario usuarioAutenticado;
+    protected int usuarioId;
+    protected int playlistId;
+    protected PlaylistMusicaController playlistMusicaController = new PlaylistMusicaController();
+    protected MusicaController musicaController = new MusicaController();
+    protected ArtistaController artistaController = new ArtistaController(); 
     
-   private Usuario usuarioAutenticado;
-    private int usuarioId;
-    private int playlistId;
-    private PlaylistMusicaController playlistMusicaController = new PlaylistMusicaController();
-    private MusicaController musicaController = new MusicaController();
-
-    /**
-     * Construtor padrão para designer visual (NÃO USAR!)
-     */
-    public VPlaylistMusica() {
-        // Só para o designer da IDE, não use este construtor
+    public VPlaylistMusica(int playlistId) {
         initComponents();
         usuarioAutenticado = ManagerSession.getInstance().getCurrentUser();
         this.usuarioId = usuarioAutenticado != null ? usuarioAutenticado.getId() : -1;
-    }
-
-    /**
-     * Construtor correto que recebe o ID da playlist
-     */
-    public VPlaylistMusica(int playlistId) {
-        this();
         this.playlistId = playlistId;
         setTitle("Músicas da Playlist ID: " + playlistId);
         carregarMusicasDaPlaylist();
     }
+
+//    public VPlaylistMusica(int playlistId) {
+//        this();
+//        this.playlistId = playlistId;
+//        setTitle("Músicas da Playlist ID: " + playlistId);
+//        carregarMusicasDaPlaylist();
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,11 +56,11 @@ public class VPlaylistMusica extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaMusicas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        excluirBotao = new javax.swing.JButton();
+        voltarBotao = new javax.swing.JButton();
+        escreveMusica = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        addMusica = new javax.swing.JButton();
 
         tabelaHome.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -97,6 +95,7 @@ public class VPlaylistMusica extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Perpetua Titling MT", 3, 36)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("PLaylist");
+        jLabel5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         tabelaMusicas.setModel(new javax.swing.table.DefaultTableModel(
@@ -129,90 +128,141 @@ public class VPlaylistMusica extends javax.swing.JFrame {
 
         jLabel1.setText("nome: ");
 
-        jButton1.setText("Excluir");
+        excluirBotao.setText("Excluir");
+        excluirBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirBotaoActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Voltar");
+        voltarBotao.setText("Voltar");
+        voltarBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarBotaoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Adicionar música");
 
-        jButton3.setText("adicionar");
+        addMusica.setText("adicionar");
+        addMusica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addMusicaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(183, 183, 183)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(32, 32, 32))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(56, 56, 56)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))))
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(excluirBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(escreveMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(addMusica))
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(voltarBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(199, 199, 199)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(49, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(221, 221, 221))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
                 .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(113, 113, 113))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(voltarBotao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(excluirBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3))
-                        .addGap(40, 40, 40))))
+                            .addComponent(escreveMusica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addMusica))))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void voltarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarBotaoActionPerformed
+        // TODO add your handling code here
+    }//GEN-LAST:event_voltarBotaoActionPerformed
+
+    private void excluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirBotaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_excluirBotaoActionPerformed
+
+    private void addMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMusicaActionPerformed
+        String nomeMusica = escreveMusica.getText().trim();
+
+    if (nomeMusica.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Digite o nome da música para adicionar.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    List<Musica> musicas = musicaController.buscarPorNome(nomeMusica);
+    Musica musica = (musicas != null && !musicas.isEmpty()) ? musicas.get(0) : null;
+    
+    if (musica == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Música não encontrada.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    boolean sucesso = playlistMusicaController.adicionarMusica(playlistId, musica.getId());
+    if (sucesso) {
+        carregarMusicasDaPlaylist(); 
+        javax.swing.JOptionPane.showMessageDialog(this, "Música adicionada à playlist!");
+        escreveMusica.setText(""); 
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro ao adicionar música na playlist.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_addMusicaActionPerformed
+    
+    
     private void carregarMusicasDaPlaylist() {
-            // Busca os IDs das músicas da playlist
-            List<Integer> musicasIds = playlistMusicaController.listarMusicasPorPlaylist(playlistId);
+    List<Integer> musicasIds = playlistMusicaController.listarMusicasPorPlaylist(playlistId);
+    DefaultTableModel model = (DefaultTableModel) tabelaMusicas.getModel();
+    model.setRowCount(0);
 
-            DefaultTableModel model = (DefaultTableModel) tabelaMusicas.getModel();
-            model.setRowCount(0);
+    for (Integer musicaId : musicasIds) {
+        Musica musica = musicaController.buscarPorId(musicaId);
+        if (musica != null) {
+        
+            Artista artista = artistaController.buscarPorId(musica.getArtistaId());
+            String nomeArtista = (artista != null) ? artista.getNomeArtistico() : "Desconhecido";
 
-            for (Integer musicaId : musicasIds) {
-                Musica musica = musicaController.buscarPorId(musicaId);
-                if (musica != null) {
-                    model.addRow(new Object[] {
-                        musica.getId(),
-                        musica.getTitulo(),
-                        musica.getArtista(),
-                        musica.getAlbum(),
-                        musica.getGenero()
-                    });
-                }
-            }
+            model.addRow(new Object[] {
+                nomeArtista,            
+                musica.getNome(),
+                musica.getAlbum(),
+                musica.getGenero(),
+                musica.getId()
+            });
         }
+    }
+}
+    
+
     /**
      * @param args the command line arguments
      */
@@ -243,22 +293,22 @@ public class VPlaylistMusica extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VPlaylistMusica().setVisible(true);
+                new VPlaylistMusica(1).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton addMusica;
+    private javax.swing.JTextField escreveMusica;
+    private javax.swing.JButton excluirBotao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabelaHome;
     private javax.swing.JTable tabelaMusicas;
+    private javax.swing.JButton voltarBotao;
     // End of variables declaration//GEN-END:variables
 }

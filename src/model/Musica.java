@@ -15,6 +15,7 @@ public class Musica {
     protected String genero;
     protected String album;
 
+
     public Musica(int id, int artistaId, String nome, String genero, String album) {
         this.id = id;
         this.artistaId = artistaId;
@@ -63,13 +64,4 @@ public class Musica {
         this.album = album;
     }
 
-    public Object getTitulo() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public Object getArtista() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    
 }
