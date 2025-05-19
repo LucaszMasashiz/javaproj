@@ -133,7 +133,6 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLoginActionPerformed
-        
         String email = emailLogin.getText();
         String senha = new String(senhaLogin.getPassword());
 
@@ -153,6 +152,11 @@ public class Login extends javax.swing.JFrame {
                 "Erro de login", 
                 JOptionPane.ERROR_MESSAGE);
         }
+        
+        Home tela = new Home();
+            tela.setLocationRelativeTo(null); 
+            tela.setVisible(true);
+            this.dispose();
     }//GEN-LAST:event_botaoLoginActionPerformed
 
     private void irProCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irProCadastroActionPerformed

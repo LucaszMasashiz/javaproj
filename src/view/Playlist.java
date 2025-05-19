@@ -26,21 +26,222 @@ public class Playlist extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaPlaylist = new javax.swing.JTable();
+        criarPlaylist = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        criarPlaylistText = new javax.swing.JTextField();
+        excluirPlaylist = new javax.swing.JButton();
+        voltarHome = new javax.swing.JButton();
+        entrarPlaylist = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        entrarPlaylistText = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+
+        jLabel4.setFont(new java.awt.Font("Perpetua Titling MT", 3, 36)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("spotifei");
+        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Playlists");
+
+        tabelaPlaylist.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Playlists", "excluir"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabelaPlaylist.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tabelaPlaylistAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tabelaPlaylist);
+
+        criarPlaylist.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        criarPlaylist.setText("Criar Playlist");
+        criarPlaylist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarPlaylistActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel2.setText("Criar playlist :");
+
+        criarPlaylistText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarPlaylistTextActionPerformed(evt);
+            }
+        });
+
+        excluirPlaylist.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        excluirPlaylist.setText("Excluir");
+        excluirPlaylist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirPlaylistActionPerformed(evt);
+            }
+        });
+
+        voltarHome.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        voltarHome.setText("Voltar");
+        voltarHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarHomeActionPerformed(evt);
+            }
+        });
+
+        entrarPlaylist.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        entrarPlaylist.setText("Entrar");
+        entrarPlaylist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entrarPlaylistActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel3.setText("Entrar na playlist :");
+
+        entrarPlaylistText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entrarPlaylistTextActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Perpetua Titling MT", 3, 36)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("spotifei");
+        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(196, 196, 196)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(275, 275, 275)
+                                .addComponent(jLabel1)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(excluirPlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(voltarHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(41, 41, 41))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(criarPlaylistText, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(criarPlaylist))
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(entrarPlaylistText, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(entrarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(excluirPlaylist)
+                                .addGap(34, 34, 34)
+                                .addComponent(voltarHome)
+                                .addGap(174, 174, 174))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(entrarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(entrarPlaylistText))
+                        .addGap(2, 2, 2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(criarPlaylistText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(criarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tabelaPlaylistAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabelaPlaylistAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaPlaylistAncestorAdded
+
+    private void excluirPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirPlaylistActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_excluirPlaylistActionPerformed
+
+    private void criarPlaylistTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarPlaylistTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_criarPlaylistTextActionPerformed
+
+    private void criarPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarPlaylistActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_criarPlaylistActionPerformed
+
+    private void entrarPlaylistTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarPlaylistTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_entrarPlaylistTextActionPerformed
+
+    private void entrarPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarPlaylistActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_entrarPlaylistActionPerformed
+
+    private void voltarHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarHomeActionPerformed
+        Home tela = new Home();
+            tela.setLocationRelativeTo(null); 
+            tela.setVisible(true);
+            this.dispose();
+    }//GEN-LAST:event_voltarHomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +279,18 @@ public class Playlist extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton criarPlaylist;
+    private javax.swing.JTextField criarPlaylistText;
+    private javax.swing.JButton entrarPlaylist;
+    private javax.swing.JTextField entrarPlaylistText;
+    private javax.swing.JButton excluirPlaylist;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tabelaPlaylist;
+    private javax.swing.JButton voltarHome;
     // End of variables declaration//GEN-END:variables
 }
