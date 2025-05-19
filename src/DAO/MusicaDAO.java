@@ -208,6 +208,30 @@ public class MusicaDAO {
         }
         return lista;
     }
+    
+    public List<Musica> findByNome(String nome) {
+    if (this.conn == null) {
+        LOGGER.severe("Operação findByNome (Musica) não pode ser executada: conexão indisponível.");
+        return Collections.emptyList();
+    }
+    String sql = "SELECT id, artista_id, nome, genero, album FROM musica WHERE nome ILIKE ?"; 
+    List<Musica> lista = new ArrayList<>();
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, "%" + nome + "%");
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Musica musica = converteParaMusica(rs);
+                if (musica != null) {
+                    lista.add(musica);
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        LOGGER.log(Level.SEVERE, "Erro ao buscar Musicas por nome: " + nome, ex);
+        return Collections.emptyList();
+    }
+    return lista;
+}
 
     private Musica converteParaMusica(ResultSet rs) {
         try {

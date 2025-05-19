@@ -3,6 +3,7 @@ package view;
 
 import controller.UsuarioController;
 import javax.swing.JOptionPane;
+import manager.ManagerSession;
 import model.Usuario;
 import view.Cadastro;
 
@@ -47,7 +48,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setText("spotifei");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        botaoLogin.setText("Cadastrar");
+        botaoLogin.setText("Login");
         botaoLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoLoginActionPerformed(evt);
@@ -127,6 +128,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLoginActionPerformed
+        
         String email = emailLogin.getText();
         String senha = new String(senhaLogin.getPassword());
 
@@ -135,14 +137,17 @@ public class Login extends javax.swing.JFrame {
         if (usuarioAutenticado != null) {
             JOptionPane.showMessageDialog(this, 
                 "Login realizado com sucesso!\nBem-vindo, " + usuarioAutenticado.getNome() + "!");
-          
+            ManagerSession.getInstance().setCurrentUser(usuarioAutenticado);
+            Home tela = new Home();
+                tela.setLocationRelativeTo(null); 
+                tela.setVisible(true);
+                    this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, 
                 "E-mail ou senha inválidos!", 
                 "Erro de login", 
                 JOptionPane.ERROR_MESSAGE);
         }
-    
     }//GEN-LAST:event_botaoLoginActionPerformed
 
     private void irProCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irProCadastroActionPerformed
