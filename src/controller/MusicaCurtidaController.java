@@ -44,7 +44,7 @@ public class MusicaCurtidaController {
         return musicaCurtidaDAO.findByUsuarioId(usuarioId);
     }
 
-    public boolean Curtido(int usuarioId, int musicaId) {
+    public boolean curtido(int usuarioId, int musicaId) {
         if (usuarioId <= 0 || musicaId <= 0) {
             return false;
         }

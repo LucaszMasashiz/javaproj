@@ -17,9 +17,8 @@ public class MusicaDAOTeste {
         artistaDAO = new ArtistaDAO();
         musicaDAO = new MusicaDAO();
 
-        // Cria um artista válido sempre com id gerado automaticamente
         artistaCriado = new Artista("Artista Teste", "Pop", 0, "Pessoa Artista");
-        artistaCriado = artistaDAO.save(artistaCriado); // vai gerar o id
+        artistaCriado = artistaDAO.save(artistaCriado);
         Assert.assertNotNull("Artista não foi salvo", artistaCriado);
     }
 

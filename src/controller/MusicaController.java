@@ -36,4 +36,9 @@ public class MusicaController {
     public List<Musica> buscarPorArtistaId(int artistaId) {
         return musicaDAO.findByArtistaId(artistaId);
     }
+    
+    public Musica buscarPorId(int id) {
+        return musicaDAO.findById(id);
+    }
+    
 }

@@ -7,11 +7,13 @@ package view;
 import controller.ArtistaController;
 import controller.HistoricoController;
 import controller.MusicaController;
+import controller.MusicaCurtidaController;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import manager.ManagerSession;
+import model.MusicaCurtida;
 import model.Usuario;
 
 /**
@@ -54,7 +56,6 @@ public class Home extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         bemvindo = new javax.swing.JLabel();
-        descurtirMusica = new javax.swing.JButton();
         curtirMusica = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -77,21 +78,28 @@ public class Home extends javax.swing.JFrame {
 
         tabelaHome.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Artista", "Música", "Álbum", "Gênero"
+                "Artista", "Música", "Álbum", "Gênero", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tabelaHome);
@@ -116,11 +124,13 @@ public class Home extends javax.swing.JFrame {
         bemvindo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         bemvindo.setText("Bem-vindo");
 
-        descurtirMusica.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        descurtirMusica.setText("Descutir");
-
         curtirMusica.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         curtirMusica.setText("Curtir");
+        curtirMusica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                curtirMusicaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,35 +139,31 @@ public class Home extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(61, 61, 61)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(buscarHome, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(botaoBuscar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(botaoPlaylist)
-                                        .addGap(40, 40, 40)
-                                        .addComponent(botaoHistorico)
-                                        .addGap(48, 48, 48)
-                                        .addComponent(descurtirMusica)
-                                        .addGap(46, 46, 46)
-                                        .addComponent(curtirMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buscarHome, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(botaoBuscar))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(178, 178, 178)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(53, 53, 53)
+                                .addComponent(botaoPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(botaoHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(curtirMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1))
+                        .addGap(61, 61, 61)
                         .addComponent(jLabel3)
                         .addGap(10, 10, 10)
                         .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(243, 243, 243)
-                        .addComponent(bemvindo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(221, 221, 221)
+                        .addComponent(bemvindo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -169,9 +175,9 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bemvindo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bemvindo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(buscarHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,7 +188,6 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(descurtirMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(curtirMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
@@ -231,7 +236,8 @@ public class Home extends javax.swing.JFrame {
                 artistaNome,
                 musica.getNome(),
                 musica.getAlbum(),
-                musica.getGenero()
+                musica.getGenero(),
+                musica.getId() 
             });
         }
 
@@ -255,6 +261,34 @@ public class Home extends javax.swing.JFrame {
             tela.setVisible(true);
             this.dispose();
     }//GEN-LAST:event_botaoHistoricoActionPerformed
+
+    private void curtirMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_curtirMusicaActionPerformed
+        int selectedRow = tabelaHome.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Selecione uma música na tabela para curtir.", "Nenhuma seleção", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    int musicaId;
+    try {
+        musicaId = (int) tabelaHome.getValueAt(selectedRow, 4); 
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Não foi possível obter o ID da música selecionada.", "Erro", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    int usuarioId = usuarioAutenticado.getId();
+
+    MusicaCurtidaController musicaCurtidaController = new MusicaCurtidaController(); 
+    if (musicaCurtidaController.curtido(usuarioId, musicaId)) {
+        JOptionPane.showMessageDialog(this, "Você já curtiu esta música.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+    MusicaCurtida curtida = musicaCurtidaController.curtirMusica(usuarioId, musicaId);
+    if (curtida != null) {
+        JOptionPane.showMessageDialog(this, "Música curtida!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(this, "Erro ao curtir música.", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_curtirMusicaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,7 +332,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton botaoPlaylist;
     private javax.swing.JTextField buscarHome;
     private javax.swing.JButton curtirMusica;
-    private javax.swing.JButton descurtirMusica;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

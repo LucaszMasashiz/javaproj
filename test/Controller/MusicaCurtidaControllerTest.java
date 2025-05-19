@@ -33,7 +33,7 @@ public class MusicaCurtidaControllerTest {
     public void testCurtirMusica() {
         MusicaCurtida curtida = controller.curtirMusica(usuarioId, musicaId);
         Assert.assertNotNull("Não conseguiu curtir música!", curtida);
-        Assert.assertTrue("Música deveria estar curtida.", controller.Curtido(usuarioId, musicaId));
+        Assert.assertTrue("Música deveria estar curtida.", controller.curtido(usuarioId, musicaId));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class MusicaCurtidaControllerTest {
         controller.curtirMusica(usuarioId, musicaId);
         boolean descurtiu = controller.descurtirMusica(usuarioId, musicaId);
         Assert.assertTrue("Não conseguiu descurtir música.", descurtiu);
-        Assert.assertFalse("Música não deveria estar mais curtida.", controller.Curtido(usuarioId, musicaId));
+        Assert.assertFalse("Música não deveria estar mais curtida.", controller.curtido(usuarioId, musicaId));
     }
 
     @Test
@@ -63,8 +63,8 @@ public class MusicaCurtidaControllerTest {
 
     @Test
     public void testJaCurtiu() {
-        Assert.assertFalse(controller.Curtido(usuarioId, musicaId));
+        Assert.assertFalse(controller.curtido(usuarioId, musicaId));
         controller.curtirMusica(usuarioId, musicaId);
-        Assert.assertTrue(controller.Curtido(usuarioId, musicaId));
+        Assert.assertTrue(controller.curtido(usuarioId, musicaId));
     }
 }
