@@ -4,19 +4,45 @@
  */
 package view;
 
+import controller.MusicaController;
+import controller.PlaylistMusicaController;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import manager.ManagerSession;
+import model.Musica;
+import model.Usuario;
+
 /**
  *
  * @author Masashi
  */
 public class VPlaylistMusica extends javax.swing.JFrame {
+    
+   private Usuario usuarioAutenticado;
+    private int usuarioId;
+    private int playlistId;
+    private PlaylistMusicaController playlistMusicaController = new PlaylistMusicaController();
+    private MusicaController musicaController = new MusicaController();
 
     /**
-     * Creates new form VPlaylistMusica
+     * Construtor padrão para designer visual (NÃO USAR!)
      */
     public VPlaylistMusica() {
+        // Só para o designer da IDE, não use este construtor
         initComponents();
+        usuarioAutenticado = ManagerSession.getInstance().getCurrentUser();
+        this.usuarioId = usuarioAutenticado != null ? usuarioAutenticado.getId() : -1;
     }
 
+    /**
+     * Construtor correto que recebe o ID da playlist
+     */
+    public VPlaylistMusica(int playlistId) {
+        this();
+        this.playlistId = playlistId;
+        setTitle("Músicas da Playlist ID: " + playlistId);
+        carregarMusicasDaPlaylist();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,7 +56,7 @@ public class VPlaylistMusica extends javax.swing.JFrame {
         tabelaHome = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tabelaHome1 = new javax.swing.JTable();
+        tabelaMusicas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -73,7 +99,7 @@ public class VPlaylistMusica extends javax.swing.JFrame {
         jLabel5.setText("PLaylist");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        tabelaHome1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaMusicas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -99,7 +125,7 @@ public class VPlaylistMusica extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tabelaHome1);
+        jScrollPane2.setViewportView(tabelaMusicas);
 
         jLabel1.setText("nome: ");
 
@@ -167,7 +193,26 @@ public class VPlaylistMusica extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void carregarMusicasDaPlaylist() {
+            // Busca os IDs das músicas da playlist
+            List<Integer> musicasIds = playlistMusicaController.listarMusicasPorPlaylist(playlistId);
 
+            DefaultTableModel model = (DefaultTableModel) tabelaMusicas.getModel();
+            model.setRowCount(0);
+
+            for (Integer musicaId : musicasIds) {
+                Musica musica = musicaController.buscarPorId(musicaId);
+                if (musica != null) {
+                    model.addRow(new Object[] {
+                        musica.getId(),
+                        musica.getTitulo(),
+                        musica.getArtista(),
+                        musica.getAlbum(),
+                        musica.getGenero()
+                    });
+                }
+            }
+        }
     /**
      * @param args the command line arguments
      */
@@ -214,6 +259,6 @@ public class VPlaylistMusica extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabelaHome;
-    private javax.swing.JTable tabelaHome1;
+    private javax.swing.JTable tabelaMusicas;
     // End of variables declaration//GEN-END:variables
 }

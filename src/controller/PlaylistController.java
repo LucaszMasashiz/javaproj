@@ -83,7 +83,15 @@ public class PlaylistController {
         }
         return playlistDAO.removeMusicaFromPlaylist(playlistId, musicaId);
     }
-
+    
+    public Playlist buscarPorUsuarioIdENome(int usuarioId, String nome) {
+        if (usuarioId <= 0 || nome == null || nome.trim().isEmpty()) {
+            LOGGER.warning("Dados inválidos para buscar playlist por nome.");
+            return null;
+        }
+        return playlistDAO.findByUsuarioIdAndNome(usuarioId, nome);
+    }
+    
     public List<Integer> listarMusicas(int playlistId) {
         if (playlistId <= 0) {
             LOGGER.warning("ID de playlist inválido para buscar músicas.");

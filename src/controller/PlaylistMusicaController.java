@@ -42,7 +42,14 @@ public class PlaylistMusicaController {
         }
         return playlistMusicaDAO.findMusicasByPlaylistId(playlistId);
     }
-
+    // Busca todas as músicas de uma playlist pelo nome da playlist
+    public List<Integer> listarMusicasPorNomePlaylist(String nomePlaylist) {
+        if (nomePlaylist == null || nomePlaylist.trim().isEmpty()) {
+            LOGGER.warning("Nome da playlist inválido para buscar músicas.");
+            return java.util.Collections.emptyList();
+        }
+        return playlistMusicaDAO.findMusicasByPlaylistNome(nomePlaylist);
+    }
     // (Opcional) Lista todas as relações playlist-musica
     public List<PlaylistMusica> listarTodasRelacoes() {
         return playlistMusicaDAO.findAll();

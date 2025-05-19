@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import manager.ManagerSession;
 import model.Playlist;
 import model.Usuario;
+import view.VPlaylistMusica;
 
 /**
  *
@@ -311,10 +312,22 @@ public class VPlaylist extends javax.swing.JFrame {
     }//GEN-LAST:event_entrarPlaylistTextActionPerformed
 
     private void entrarPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarPlaylistActionPerformed
-//        VPlaylistMusica tela = new VPlaylistMusica();
-//            tela.setLocationRelativeTo(null); 
-//            tela.setVisible(true);
-//            this.dispose();
+       
+        String nomePlaylist = entrarPlaylistText.getText().trim();
+        if (nomePlaylist.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Digite o nome da playlist para entrar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Playlist playlist = playlistController.buscarPorUsuarioIdENome(usuarioId, nomePlaylist);
+        if (playlist != null) {
+            VPlaylistMusica tela = new VPlaylistMusica(playlist.getId());
+            tela.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Playlist não encontrada.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    
+
     }//GEN-LAST:event_entrarPlaylistActionPerformed
 
     private void voltarHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarHomeActionPerformed

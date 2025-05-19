@@ -79,6 +79,28 @@ public class PlaylistMusicaDAO {
         return musicas;
     }
 
+    public List<Integer> findMusicasByPlaylistNome(String nomePlaylist) {
+    if (this.conn == null) {
+        LOGGER.severe("Operação findMusicasByPlaylistNome não pode ser executada: conexão indisponível.");
+        return new ArrayList<>();
+    }
+    String sql = "SELECT pm.musica_id " +
+                 "FROM playlist_musica pm " +
+                 "JOIN playlist p ON pm.playlist_id = p.id " +
+                 "WHERE LOWER(p.nome) = LOWER(?)";
+    List<Integer> musicas = new ArrayList<>();
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, nomePlaylist);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                musicas.add(rs.getInt("musica_id"));
+            }
+        }
+    } catch (SQLException ex) {
+        LOGGER.log(Level.SEVERE, "Erro ao buscar músicas pela playlist de nome: " + nomePlaylist, ex);
+    }
+    return musicas;
+}
     
     public List<PlaylistMusica> findAll() {
         if (this.conn == null) {

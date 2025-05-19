@@ -240,7 +240,25 @@ public class PlaylistDAO {
         }
         return musicaIds;
     }
-
+    public Playlist findByUsuarioIdAndNome(int usuarioId, String nome) {
+        if (this.conn == null) {
+            LOGGER.severe("Operação findByUsuarioIdAndNome não pode ser executada: conexão indisponível.");
+            return null;
+        }
+        String sql = "SELECT id, usuario_id, nome FROM playlist WHERE usuario_id = ? AND nome = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, usuarioId);
+            ps.setString(2, nome);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return converteParaPlaylist(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "Erro ao buscar Playlist por usuário e nome.", ex);
+        }
+        return null;
+    }
     public void closeConnection() {
         if (this.conn != null) {
             try {
