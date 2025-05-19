@@ -27,10 +27,13 @@ public class MusicaController {
     }
 
     public List<Musica> buscarPorGenero(String genero) {
-    if (genero == null || genero.trim().isEmpty()) {
-        LOGGER.warning("Gênero para busca está vazio.");
-        return Collections.emptyList();
+        if (genero == null || genero.trim().isEmpty()) {
+            LOGGER.warning("Gênero para busca está vazio.");
+            return Collections.emptyList();
+        }
+        return musicaDAO.findByGenero(genero);
     }
-    return musicaDAO.findByGenero(genero);
-}
+    public List<Musica> buscarPorArtistaId(int artistaId) {
+        return musicaDAO.findByArtistaId(artistaId);
+    }
 }

@@ -4,6 +4,10 @@
  */
 package view;
 
+import controller.ArtistaController;
+import controller.MusicaController;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import manager.ManagerSession;
@@ -14,7 +18,9 @@ import model.Usuario;
  * @author Masashi
  */
 public class Home extends javax.swing.JFrame {
-
+    
+    private MusicaController musicaController = new MusicaController();
+    private ArtistaController artistaController = new ArtistaController();
     Usuario usuarioAutenticado = null;
     
     /**
@@ -162,12 +168,48 @@ public class Home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Busca não pode ser vazia!", "Erro de Validação", JOptionPane.ERROR_MESSAGE); 
             return;
         }
-        return;
+
+        DefaultTableModel tabela = (DefaultTableModel) tabelaHome.getModel();
+        tabela.setRowCount(0); 
+        List<model.Musica> musicasPorNome = musicaController.buscarPorNome(busca);
+
+       
+        List<model.Musica> musicasPorGenero = musicaController.buscarPorGenero(busca);
+
+       
+        List<model.Musica> musicasPorArtista = Collections.emptyList();
+        model.Artista artista = artistaController.buscarPorNomeArtistico(busca);
+        if (artista != null) {
+            musicasPorArtista = new MusicaController().buscarPorArtistaId(artista.getId());
+        }
+
+        
+        List<model.Musica> resultadoFinal = new java.util.ArrayList<>();
+        for (model.Musica m : musicasPorNome) if (!resultadoFinal.contains(m)) resultadoFinal.add(m);
+        for (model.Musica m : musicasPorGenero) if (!resultadoFinal.contains(m)) resultadoFinal.add(m);
+        for (model.Musica m : musicasPorArtista) if (!resultadoFinal.contains(m)) resultadoFinal.add(m);
+
+        
+        for (model.Musica musica : resultadoFinal) {
+            String artistaNome = "";
+            if (musica.getArtistaId() > 0) {
+                model.Artista art = artistaController.buscarPorId(musica.getArtistaId());
+                artistaNome = art != null ? art.getNomeArtistico() : "";
+            }
+            tabela.addRow(new Object[] {
+                artistaNome,
+                musica.getNome(),
+                musica.getAlbum(),
+                musica.getGenero()
+            });
+        }
+
+        if (resultadoFinal.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum resultado encontrado para \"" + busca + "\".");
+        }
     }//GEN-LAST:event_botaoBuscarActionPerformed
     
-    DefaultTableModel tabela = (DefaultTableModle) tabelaHome.getModel();
-    tabela.setRowCount(0);
-    
+
     
     private void botaoPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlaylistActionPerformed
         Playlist tela = new Playlist();

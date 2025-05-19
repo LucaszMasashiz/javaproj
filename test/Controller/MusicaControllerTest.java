@@ -1,12 +1,14 @@
-package DAO;
+package Controller;
 
+import DAO.MusicaDAO;
+import DAO.ArtistaDAO;
 import model.Musica;
 import model.Artista;
 import org.junit.*;
 
 import java.util.List;
 
-public class MusicaDAOTeste {
+public class MusicaControllerTest {
     private MusicaDAO musicaDAO;
     private ArtistaDAO artistaDAO;
     private Musica musicaCriada;
@@ -17,9 +19,9 @@ public class MusicaDAOTeste {
         artistaDAO = new ArtistaDAO();
         musicaDAO = new MusicaDAO();
 
-        // Cria um artista válido sempre com id gerado automaticamente
-        artistaCriado = new Artista("Artista Teste", "Pop", 0, "Pessoa Artista");
-        artistaCriado = artistaDAO.save(artistaCriado); // vai gerar o id
+        // Cria um artista válido (com id gerado automaticamente)
+        artistaCriado = new Artista("Artista Controller Teste", "Pop", 0, "Pessoa Controller");
+        artistaCriado = artistaDAO.save(artistaCriado);
         Assert.assertNotNull("Artista não foi salvo", artistaCriado);
     }
 

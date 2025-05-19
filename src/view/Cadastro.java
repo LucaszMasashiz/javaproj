@@ -202,6 +202,7 @@ public class Cadastro extends javax.swing.JFrame {
                 }
             }
         }
+ 
     }//GEN-LAST:event_botaoCadastroActionPerformed
 
     /**

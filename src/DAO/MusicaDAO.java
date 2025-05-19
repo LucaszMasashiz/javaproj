@@ -249,7 +249,6 @@ public class MusicaDAO {
     
     
     
-    
     public void closeConnection() {
         if (this.conn != null) {
             try {

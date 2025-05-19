@@ -272,13 +272,14 @@ public class ArtistaDAO {
         }
 
         String sql = """
-            SELECT p.id, p.nome,
-                   a.nome_artistico, a.genero
-              FROM pessoa p
-              JOIN artista a ON p.id = a.id
-             WHERE a.nome_artistico = ?
-        """;
+                SELECT p.id, p.nome,
+                       a.nome_artistico, a.genero
+                  FROM pessoa p
+                  JOIN artista a ON p.id = a.id
+                 WHERE unaccent(a.nome_artistico) ILIKE unaccent(?)
+            """;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + nomeArtistico + "%");
             ps.setString(1, nomeArtistico);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

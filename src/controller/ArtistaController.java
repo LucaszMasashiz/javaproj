@@ -22,7 +22,7 @@ public class ArtistaController {
         this.artistaDAO = new ArtistaDAO();
     }
 
-    // Salvar novo artista
+    
     public Artista salvarArtista(String nomeArtistico, String genero, String nomeReal) {
         if (nomeArtistico == null || nomeArtistico.trim().isEmpty() ||
             genero == null || genero.trim().isEmpty() ||
@@ -34,7 +34,7 @@ public class ArtistaController {
         return artistaDAO.save(artista);
     }
 
-    // Atualizar artista existente
+ 
     public Artista atualizarArtista(int id, String nomeArtistico, String genero, String nomeReal) {
         if (id <= 0 ||
             nomeArtistico == null || nomeArtistico.trim().isEmpty() ||
@@ -47,7 +47,7 @@ public class ArtistaController {
         return artistaDAO.update(artista);
     }
 
-    // Remover artista por ID
+   
     public boolean removerArtista(int id) {
         if (id <= 0) {
             LOGGER.warning("ID inválido para remoção.");
@@ -56,7 +56,7 @@ public class ArtistaController {
         return artistaDAO.delete(id);
     }
 
-    // Buscar artista por ID
+   
     public Artista buscarPorId(int id) {
         if (id <= 0) {
             LOGGER.warning("ID inválido para busca.");
@@ -65,12 +65,12 @@ public class ArtistaController {
         return artistaDAO.findById(id);
     }
 
-    // Listar todos os artistas
+    
     public List<Artista> listarTodos() {
         return artistaDAO.findAll();
     }
 
-    // Buscar artistas por gênero
+    
     public List<Artista> buscarPorGenero(String genero) {
         if (genero == null || genero.trim().isEmpty()) {
             LOGGER.warning("Gênero não informado para busca.");
@@ -79,7 +79,7 @@ public class ArtistaController {
         return artistaDAO.findByGenero(genero);
     }
 
-    // Buscar artista por nome artístico
+  
     public Artista buscarPorNomeArtistico(String nomeArtistico) {
         if (nomeArtistico == null || nomeArtistico.trim().isEmpty()) {
             LOGGER.warning("Nome artístico não informado para busca.");
