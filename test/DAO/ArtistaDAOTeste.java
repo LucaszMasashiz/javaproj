@@ -16,8 +16,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ArtistaDAOTeste {
-    private static ArtistaDAO dao;
-    private static Connection conn;
+    protected static ArtistaDAO dao;
+    protected static Connection conn;
 
     @BeforeClass
     public static void setUpClass() throws SQLException { 

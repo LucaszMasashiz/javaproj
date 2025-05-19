@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 
 
 public class MusicaDAO {
-    private Connection conn;
-    private static final Logger LOGGER = Logger.getLogger(MusicaDAO.class.getName());
+    protected Connection conn;
+    protected static final Logger LOGGER = Logger.getLogger(MusicaDAO.class.getName());
 
     public MusicaDAO() {
         try {

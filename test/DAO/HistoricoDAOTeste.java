@@ -8,9 +8,8 @@ import org.junit.Test;
 import java.util.List;
 
 public class HistoricoDAOTeste {
-
-    private HistoricoDAO historicoDAO;
-    private Historico historicoCriado;
+    protected HistoricoDAO historicoDAO;
+    protected Historico historicoCriado;
 
     @Before
     public void setUp() {

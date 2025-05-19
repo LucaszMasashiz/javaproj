@@ -17,8 +17,8 @@ import java.util.List;
  * @author Masashi
  */
 public class ArtistaControllerTest {
-    private ArtistaController controller;
-    private Artista artistaCriado;
+    protected ArtistaController controller;
+    protected Artista artistaCriado;
 
     @Before
     public void setUp() {

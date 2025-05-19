@@ -6,7 +6,7 @@ import model.Historico;
 import java.util.List;
 
 public class HistoricoController {
-    private HistoricoDAO historicoDAO;
+    protected HistoricoDAO historicoDAO;
 
     public HistoricoController() {
         this.historicoDAO = new HistoricoDAO();

@@ -8,8 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HistoricoDAO {
-    private Connection conn;
-    private static final Logger LOGGER = Logger.getLogger(HistoricoDAO.class.getName());
+    protected Connection conn;
+    protected static final Logger LOGGER = Logger.getLogger(HistoricoDAO.class.getName());
 
     public HistoricoDAO() {
         try {

@@ -27,6 +27,7 @@ public class Historico extends javax.swing.JFrame {
         usuarioAutenticado = ManagerSession.getInstance().getCurrentUser();
         carregarHistorico(); 
         carregarCurtidas();
+        carregarDescurtidas();
         Component listaCurtidas = new javax.swing.JList<>();
         JScrollPane jScrollPaneCurtidas = new javax.swing.JScrollPane(listaCurtidas);
     }
@@ -57,6 +58,21 @@ public class Historico extends javax.swing.JFrame {
             }
         }
         listaCurtida.setModel(model);
+    }
+    
+    private void carregarDescurtidas() {
+        controller.MusicaDescurtidaController musicaDescurtidaController = new controller.MusicaDescurtidaController();
+        DefaultListModel<String> model = new DefaultListModel<>();
+        
+        if (usuarioAutenticado != null) {
+            List<model.MusicaDescurtida> descurtidas = musicaDescurtidaController.listarMusicasDescurtidas(usuarioAutenticado.getId());
+            for (model.MusicaDescurtida md : descurtidas) {
+                model.Musica musica = new controller.MusicaController().buscarPorId(md.getMusicaId());
+                String texto = (musica != null) ? musica.getNome() : "ID: " + md.getMusicaId();
+                model.addElement(texto);
+            }
+        }
+        listaDescurtida.setModel(model);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -133,6 +149,11 @@ public class Historico extends javax.swing.JFrame {
 
         descurtirMusica.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         descurtirMusica.setText("Descutir");
+        descurtirMusica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                descurtirMusicaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -209,6 +230,43 @@ public class Historico extends javax.swing.JFrame {
             tela.setVisible(true);
             this.dispose();
     }//GEN-LAST:event_voltaHomeActionPerformed
+
+    private void descurtirMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descurtirMusicaActionPerformed
+        int selectedIndex = listaCurtida.getSelectedIndex();
+            if (selectedIndex == -1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Selecione uma música curtida na lista para descurtir.", "Nenhuma seleção", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String nomeMusicaSelecionada = listaCurtida.getModel().getElementAt(selectedIndex);
+            int usuarioId = usuarioAutenticado.getId();
+            controller.MusicaController musicaController = new controller.MusicaController();
+            model.Musica musica = musicaController.buscarPorNome(nomeMusicaSelecionada).stream()
+                .findFirst()
+                .orElse(null);
+            if (musica == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Não foi possível encontrar o ID da música.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            int musicaId = musica.getId();
+
+            // Remover da curtida
+            MusicaCurtidaController musicaCurtidaController = new MusicaCurtidaController();
+            boolean apagou = musicaCurtidaController.descurtirMusica(usuarioId, musicaId);
+
+            // Adicionar na descurtida!
+            controller.MusicaDescurtidaController musicaDescurtidaController = new controller.MusicaDescurtidaController();
+            musicaDescurtidaController.descurtirMusica(usuarioId, musicaId);
+
+            if (apagou) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Você descurtiu a música.", "Sucesso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                carregarCurtidas(); 
+                carregarDescurtidas();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Erro ao descurtir música.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+    }//GEN-LAST:event_descurtirMusicaActionPerformed
 
     /**
      * @param args the command line arguments

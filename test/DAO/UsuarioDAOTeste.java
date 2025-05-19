@@ -24,8 +24,8 @@ import static org.junit.Assert.*;
  * @author Masashi
  */
 public class UsuarioDAOTeste {
-    private static UsuarioDAO dao;
-    private static Connection conn;
+    protected static UsuarioDAO dao;
+    protected static Connection conn;
 
     @BeforeClass
     public static void setUpClass() throws SQLException {

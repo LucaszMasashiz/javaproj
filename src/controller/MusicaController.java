@@ -11,8 +11,8 @@ import java.util.logging.Logger;
  * @author Masashi
  */
 public class MusicaController {
-    private MusicaDAO musicaDAO;
-    private static final Logger LOGGER = Logger.getLogger(MusicaController.class.getName());
+    protected MusicaDAO musicaDAO;
+    protected static final Logger LOGGER = Logger.getLogger(MusicaController.class.getName());
 
     public MusicaController() {
         this.musicaDAO = new MusicaDAO();

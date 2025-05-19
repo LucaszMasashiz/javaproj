@@ -11,8 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PlaylistDAO {
-    private Connection conn;
-    private static final Logger LOGGER = Logger.getLogger(PlaylistDAO.class.getName());
+    protected Connection conn;
+    protected static final Logger LOGGER = Logger.getLogger(PlaylistDAO.class.getName());
 
     public PlaylistDAO() {
         try {

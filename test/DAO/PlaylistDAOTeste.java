@@ -20,16 +20,16 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class PlaylistDAOTeste {
-    private static PlaylistDAO playlistDAO;
-    private static UsuarioDAO usuarioDAO;
-    private static ArtistaDAO artistaDAO;
-    private static MusicaDAO musicaDAO;
-    private static Connection conn;
+    protected static PlaylistDAO playlistDAO;
+    protected static UsuarioDAO usuarioDAO;
+    protected static ArtistaDAO artistaDAO;
+    protected static MusicaDAO musicaDAO;
+    protected static Connection conn;
 
-    private static int idUsuarioTeste;
-    private static int idArtistaTesteP;
-    private static int idMusicaTeste1;
-    private static int idMusicaTeste2;
+    protected static int idUsuarioTeste;
+    protected static int idArtistaTesteP;
+    protected static int idMusicaTeste1;
+    protected static int idMusicaTeste2;
 
 
     @BeforeClass

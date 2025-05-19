@@ -263,31 +263,31 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoHistoricoActionPerformed
 
     private void curtirMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_curtirMusicaActionPerformed
-        int selectedRow = tabelaHome.getSelectedRow();
-    if (selectedRow == -1) {
+    int selectedRow = tabelaHome.getSelectedRow();
+        if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Selecione uma música na tabela para curtir.", "Nenhuma seleção", JOptionPane.WARNING_MESSAGE);
         return;
     }
     int musicaId;
-    try {
-        musicaId = (int) tabelaHome.getValueAt(selectedRow, 4); 
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Não foi possível obter o ID da música selecionada.", "Erro", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    int usuarioId = usuarioAutenticado.getId();
+        try {
+            musicaId = (int) tabelaHome.getValueAt(selectedRow, 4); 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Não foi possível obter o ID da música selecionada.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int usuarioId = usuarioAutenticado.getId();
 
-    MusicaCurtidaController musicaCurtidaController = new MusicaCurtidaController(); 
-    if (musicaCurtidaController.curtido(usuarioId, musicaId)) {
-        JOptionPane.showMessageDialog(this, "Você já curtiu esta música.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-        return;
-    }
-    MusicaCurtida curtida = musicaCurtidaController.curtirMusica(usuarioId, musicaId);
-    if (curtida != null) {
-        JOptionPane.showMessageDialog(this, "Música curtida!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        JOptionPane.showMessageDialog(this, "Erro ao curtir música.", "Erro", JOptionPane.ERROR_MESSAGE);
-    }
+        MusicaCurtidaController musicaCurtidaController = new MusicaCurtidaController(); 
+        if (musicaCurtidaController.curtido(usuarioId, musicaId)) {
+            JOptionPane.showMessageDialog(this, "Você já curtiu esta música.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        MusicaCurtida curtida = musicaCurtidaController.curtirMusica(usuarioId, musicaId);
+        if (curtida != null) {
+            JOptionPane.showMessageDialog(this, "Música curtida!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao curtir música.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_curtirMusicaActionPerformed
 
     /**

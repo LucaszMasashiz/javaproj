@@ -14,9 +14,9 @@ import java.util.List;
  * @author Masashi
  */
 public class MusicaCurtidaControllerTest {
-    private MusicaCurtidaController controller;
-    private final int usuarioId = 90; 
-    private final int musicaId = 1;   
+    protected MusicaCurtidaController controller;
+    protected final int usuarioId = 90; 
+    protected final int musicaId = 1;   
 
     @Before
     public void setUp() {

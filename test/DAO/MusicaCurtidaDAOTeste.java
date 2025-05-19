@@ -4,10 +4,10 @@ import org.junit.*;
 import java.util.List;
 
 public class MusicaCurtidaDAOTeste {
-    private MusicaCurtidaDAO dao;
-    private final int usuarioId = 90;    
-    private final int musicaId = 67;    
-    private int idCurtida = 0;
+    protected MusicaCurtidaDAO dao;
+    protected final int usuarioId = 90;    
+    protected final int musicaId = 67;    
+    protected int idCurtida = 0;
 
     @Before
     public void setUp() {

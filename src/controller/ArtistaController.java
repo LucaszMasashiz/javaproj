@@ -15,8 +15,8 @@ import java.util.logging.Logger;
  * @author Masashi
  */
 public class ArtistaController {
-    private ArtistaDAO artistaDAO;
-    private static final Logger LOGGER = Logger.getLogger(ArtistaController.class.getName());
+    protected ArtistaDAO artistaDAO;
+    protected static final Logger LOGGER = Logger.getLogger(ArtistaController.class.getName());
 
     public ArtistaController() {
         this.artistaDAO = new ArtistaDAO();

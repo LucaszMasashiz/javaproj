@@ -9,10 +9,10 @@ import org.junit.*;
 import java.util.List;
 
 public class MusicaControllerTest {
-    private MusicaDAO musicaDAO;
-    private ArtistaDAO artistaDAO;
-    private Musica musicaCriada;
-    private Artista artistaCriado;
+    protected MusicaDAO musicaDAO;
+    protected ArtistaDAO artistaDAO;
+    protected Musica musicaCriada;
+    protected Artista artistaCriado;
 
     @Before
     public void setUp() {

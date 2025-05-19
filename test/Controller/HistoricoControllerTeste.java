@@ -6,11 +6,9 @@ import org.junit.*;
 import java.util.List;
 
 public class HistoricoControllerTeste {
-
     private HistoricoController historicoController;
-    // USE UM USUÁRIO QUE EXISTE NO SEU BANCO!
-    private final int usuarioId = 90;
-    private int idHistoricoCriado = 0;
+    protected final int usuarioId = 90;
+    protected int idHistoricoCriado = 0;
 
     @Before
     public void setUp() {
@@ -20,8 +18,6 @@ public class HistoricoControllerTeste {
 
     @After
     public void tearDown() {
-        // Não precisa deletar, pois não estamos testando delete neste caso.
-        // Mas se quiser, pode implementar lógica de limpeza manualmente.
     }
 
     @Test

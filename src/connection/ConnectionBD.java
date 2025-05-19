@@ -14,8 +14,8 @@ import java.sql.SQLException;
  */
 public class ConnectionBD {
 
-    private static ConnectionBD instance;
-    private Connection connection;
+    protected static ConnectionBD instance;
+    protected Connection connection;
 
     private static final String URL = "jdbc:postgresql://pgadmin.panel.javaworld.com.br:5433/lucas_ic7p28";
     private static final String USER = "lucas_ic7p28";

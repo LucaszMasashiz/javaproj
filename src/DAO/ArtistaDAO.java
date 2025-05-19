@@ -14,8 +14,8 @@ import java.util.logging.Logger;
  * @author Masashi
  */
 public class ArtistaDAO {
-    private Connection conn;
-    private static final Logger LOGGER = Logger.getLogger(ArtistaDAO.class.getName());
+    protected Connection conn;
+    protected static final Logger LOGGER = Logger.getLogger(ArtistaDAO.class.getName());
 
     public ArtistaDAO() {
         try {

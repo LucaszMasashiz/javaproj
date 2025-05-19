@@ -13,7 +13,7 @@ import model.MusicaCurtida;
  * @author Masashi
  */
 public class MusicaCurtidaController {
-    private MusicaCurtidaDAO musicaCurtidaDAO;
+    protected MusicaCurtidaDAO musicaCurtidaDAO;
 
     public MusicaCurtidaController() {
         this.musicaCurtidaDAO = new MusicaCurtidaDAO();

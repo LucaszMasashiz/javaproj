@@ -18,8 +18,8 @@ import java.util.logging.Logger;
  * @author Masashi
  */
 public class UsuarioDAO {
-    private Connection conn;
-    private static final Logger LOGGER = Logger.getLogger(UsuarioDAO.class.getName());
+    protected Connection conn;
+    protected static final Logger LOGGER = Logger.getLogger(UsuarioDAO.class.getName());
 
     public UsuarioDAO() {
         try {

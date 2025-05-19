@@ -8,9 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UsuarioController {
-
-    private final UsuarioDAO usuarioDAO;
-    private static final Logger LOGGER = Logger.getLogger(UsuarioController.class.getName());
+    protected final UsuarioDAO usuarioDAO;
+    protected static final Logger LOGGER = Logger.getLogger(UsuarioController.class.getName());
 
     public UsuarioController() {
         this.usuarioDAO = new UsuarioDAO();
