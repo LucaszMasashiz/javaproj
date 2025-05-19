@@ -249,7 +249,7 @@ public class Home extends javax.swing.JFrame {
 
     
     private void botaoPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlaylistActionPerformed
-        Playlist tela = new Playlist();
+        VPlaylist tela = new VPlaylist();
             tela.setLocationRelativeTo(null); 
             tela.setVisible(true);
             this.dispose();

@@ -4,18 +4,33 @@
  */
 package view;
 
+import controller.PlaylistController;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import manager.ManagerSession;
+import model.Playlist;
+import model.Usuario;
+
 /**
  *
  * @author Masashi
  */
-public class Playlist extends javax.swing.JFrame {
-
+public class VPlaylist extends javax.swing.JFrame {
+    protected int usuarioId;
+    protected PlaylistController playlistController = new PlaylistController();
+    Usuario usuarioAutenticado = null;
     /**
      * Creates new form Playlist
      */
-    public Playlist() {
+    public VPlaylist() {
         initComponents();
+        usuarioAutenticado = ManagerSession.getInstance().getCurrentUser();
+        this.usuarioId = usuarioAutenticado.getId();
+        atualizarTabelaPlaylists();
     }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,21 +68,28 @@ public class Playlist extends javax.swing.JFrame {
 
         tabelaPlaylist.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Playlists", "excluir"
+                "Playlists", "excluir", "ID"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.Boolean.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tabelaPlaylist.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -142,71 +164,77 @@ public class Playlist extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(196, 196, 196)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(criarPlaylistText, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(criarPlaylist))
+                                    .addComponent(jLabel2))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(excluirPlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(voltarHome, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(entrarPlaylistText, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(entrarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 12, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(275, 275, 275)
-                                .addComponent(jLabel1)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(21, 21, 21))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(excluirPlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(voltarHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(41, 41, 41))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(criarPlaylistText, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(criarPlaylist))
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(entrarPlaylistText, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(entrarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(224, 224, 224)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(excluirPlaylist)
-                                .addGap(34, 34, 34)
-                                .addComponent(voltarHome)
-                                .addGap(174, 174, 174))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(entrarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(entrarPlaylistText))
-                        .addGap(2, 2, 2))
+                                .addGap(63, 63, 63)
+                                .addComponent(voltarHome))
+                            .addComponent(excluirPlaylist))
+                        .addGap(161, 161, 161)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(criarPlaylistText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(criarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(49, Short.MAX_VALUE))
+                            .addComponent(criarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(entrarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(entrarPlaylistText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -217,15 +245,65 @@ public class Playlist extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaPlaylistAncestorAdded
 
     private void excluirPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirPlaylistActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = tabelaPlaylist.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Selecione uma playlist para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    int playlistId = (int) tabelaPlaylist.getValueAt(selectedRow, 2); 
+
+    int confirm = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir a playlist?", "Confirmar exclusão", JOptionPane.YES_NO_OPTION);
+    if (confirm == JOptionPane.YES_OPTION) {
+        boolean sucesso = playlistController.deletarPlaylist(playlistId);
+        if (sucesso) {
+            atualizarTabelaPlaylists();
+            JOptionPane.showMessageDialog(this, "Playlist excluída com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao excluir playlist.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     }//GEN-LAST:event_excluirPlaylistActionPerformed
 
     private void criarPlaylistTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarPlaylistTextActionPerformed
-        // TODO add your handling code here:
+        String nomePlaylist = criarPlaylistText.getText().trim();
+    if (!nomePlaylist.isEmpty()) {
+        Playlist nova = playlistController.criarPlaylist(usuarioId, nomePlaylist);
+        if (nova != null) {
+            atualizarTabelaPlaylists();
+            criarPlaylistText.setText("");
+            JOptionPane.showMessageDialog(this, "Playlist criada com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao criar playlist.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Digite um nome para a playlist.", "Aviso", JOptionPane.WARNING_MESSAGE);
+    }
     }//GEN-LAST:event_criarPlaylistTextActionPerformed
 
     private void criarPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarPlaylistActionPerformed
-        // TODO add your handling code here:
+        String nomePlaylist = criarPlaylistText.getText().trim();
+    if (!nomePlaylist.isEmpty()) {
+        Playlist nova = playlistController.criarPlaylist(usuarioId, nomePlaylist);
+        if (nova != null) {
+            atualizarTabelaPlaylists();
+            criarPlaylistText.setText("");
+            JOptionPane.showMessageDialog(this, "Playlist criada com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao criar playlist.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Digite um nome para a playlist.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void atualizarTabelaPlaylists() {
+        List<model.Playlist> playlists = playlistController.listarPorUsuario(usuarioId);
+        DefaultTableModel model = (DefaultTableModel) tabelaPlaylist.getModel();
+        model.setRowCount(0); 
+        
+        for (model.Playlist p : playlists) {
+            model.addRow(new Object[]{p.getNome(), false, p.getId()});
+        }
     }//GEN-LAST:event_criarPlaylistActionPerformed
 
     private void entrarPlaylistTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarPlaylistTextActionPerformed
@@ -233,7 +311,10 @@ public class Playlist extends javax.swing.JFrame {
     }//GEN-LAST:event_entrarPlaylistTextActionPerformed
 
     private void entrarPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarPlaylistActionPerformed
-        // TODO add your handling code here:
+//        VPlaylistMusica tela = new VPlaylistMusica();
+//            tela.setLocationRelativeTo(null); 
+//            tela.setVisible(true);
+//            this.dispose();
     }//GEN-LAST:event_entrarPlaylistActionPerformed
 
     private void voltarHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarHomeActionPerformed
@@ -260,22 +341,26 @@ public class Playlist extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Playlist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(model.Playlist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Playlist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(model.Playlist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Playlist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(model.Playlist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Playlist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(model.Playlist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the form */ 
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Playlist().setVisible(true);
-            }
-        });
+        public void run() {
+            new VPlaylist().setVisible(true);
+        }
+    });
+          
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
