@@ -8,10 +8,19 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Classe DAO responsável pelas operações de persistência relacionadas à entidade MusicaCurtida.
+ * Permite salvar, remover, buscar e verificar curtidas de músicas por usuários.
+ * 
+ * @author Masashi
+ */
 public class MusicaCurtidaDAO {
     protected Connection conn;
     protected static final Logger LOGGER = Logger.getLogger(MusicaCurtidaDAO.class.getName());
 
+    /**
+     * Construtor padrão. Inicializa a conexão com o banco de dados.
+     */
     public MusicaCurtidaDAO() {
         try {
             this.conn = ConnectionBD.getInstance().getConnection();
@@ -21,7 +30,12 @@ public class MusicaCurtidaDAO {
         }
     }
 
-    
+     /**
+     * Salva uma nova curtida de música para um usuário no banco de dados.
+     *
+     * @param curtida Objeto MusicaCurtida a ser salvo.
+     * @return O objeto MusicaCurtida salvo (com ID atualizado), ou null em caso de erro.
+     */
     public MusicaCurtida save(MusicaCurtida curtida) {
         if (this.conn == null) {
             LOGGER.severe("Conexão indisponível.");
@@ -42,7 +56,13 @@ public class MusicaCurtidaDAO {
         }
     }
 
- 
+ /**
+     * Remove uma curtida de música de um usuário no banco de dados.
+     *
+     * @param usuarioId ID do usuário.
+     * @param musicaId ID da música.
+     * @return true se a curtida foi removida com sucesso, false caso contrário.
+     */
     public boolean delete(int usuarioId, int musicaId) {
         if (this.conn == null) {
             LOGGER.severe("Conexão indisponível.");
@@ -60,7 +80,12 @@ public class MusicaCurtidaDAO {
         }
     }
 
-
+/**
+     * Busca todas as músicas curtidas por um determinado usuário.
+     *
+     * @param usuarioId ID do usuário.
+     * @return Lista de objetos MusicaCurtida associados ao usuário.
+     */
     public List<MusicaCurtida> findByUsuarioId(int usuarioId) {
         if (this.conn == null) {
             LOGGER.severe("Conexão indisponível.");
@@ -85,7 +110,13 @@ public class MusicaCurtidaDAO {
         return lista;
     }
 
-
+ /**
+     * Verifica se um usuário já curtiu uma determinada música.
+     *
+     * @param usuarioId ID do usuário.
+     * @param musicaId ID da música.
+     * @return true se o usuário já curtiu a música, false caso contrário.
+     */
     public boolean isCurtida(int usuarioId, int musicaId) {
         if (this.conn == null) {
             LOGGER.severe("Conexão indisponível.");
