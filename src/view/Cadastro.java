@@ -21,7 +21,7 @@ public class Cadastro extends javax.swing.JFrame {
      
     public Cadastro() {
         initComponents();
-        getContentPane().setBackground(new java.awt.Color(96, 125, 139));
+        getContentPane().setBackground(new java.awt.Color(70, 130, 180));
     }
 
     /**

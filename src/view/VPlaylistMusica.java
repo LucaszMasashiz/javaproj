@@ -33,7 +33,7 @@ public class VPlaylistMusica extends javax.swing.JFrame {
         this.playlistId = playlistId;
         setTitle("Músicas da Playlist ID: " + playlistId);
         carregarMusicasDaPlaylist();
-        getContentPane().setBackground(new java.awt.Color(96, 125, 139));
+        getContentPane().setBackground(new java.awt.Color(70, 130, 180));
     }
 
     /**

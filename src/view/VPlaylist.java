@@ -27,7 +27,7 @@ public class VPlaylist extends javax.swing.JFrame {
         usuarioAutenticado = ManagerSession.getInstance().getCurrentUser();
         this.usuarioId = usuarioAutenticado.getId();
         atualizarTabelaPlaylists();
-        getContentPane().setBackground(new java.awt.Color(96, 125, 139));
+        getContentPane().setBackground(new java.awt.Color(70, 130, 180));
     }
 
     

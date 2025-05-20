@@ -32,7 +32,7 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         usuarioAutenticado = ManagerSession.getInstance().getCurrentUser();
         bemvindo.setText("Bem-vindo, " + usuarioAutenticado.getNome());
-        getContentPane().setBackground(new java.awt.Color(96, 125, 139));
+        getContentPane().setBackground(new java.awt.Color(70, 130, 180));
     }
 
     /**
