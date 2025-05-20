@@ -34,13 +34,13 @@ public class VPlaylistMusica extends javax.swing.JFrame {
         setTitle("Músicas da Playlist ID: " + playlistId);
         carregarMusicasDaPlaylist();
     }
-
-//    public VPlaylistMusica(int playlistId) {
-//        this();
-//        this.playlistId = playlistId;
-//        setTitle("Músicas da Playlist ID: " + playlistId);
-//        carregarMusicasDaPlaylist();
-//    }
+// -----------------------------------------------------------------------------------------------------------------------------------------
+//fazer o deletar musica 
+    //arrumar poara buscar playlist com letra minuscula
+    //fechar pagina quando abirir essa
+    //design
+//------------------------------------------------------------------------------------------------------------------------------------------- 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -206,11 +206,36 @@ public class VPlaylistMusica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void voltarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarBotaoActionPerformed
-        // TODO add your handling code here
+        VPlaylist tela = new VPlaylist();
+            tela.setLocationRelativeTo(null); 
+            tela.setVisible(true);
+            this.dispose();
     }//GEN-LAST:event_voltarBotaoActionPerformed
 
     private void excluirBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirBotaoActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = tabelaMusicas.getSelectedRow();
+            if (selectedRow == -1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Selecione uma música para excluir.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            } 
+//            sempre lembrar que a coluna da tabela começa contando do 0(0,1,2,3,4) o 4 = a quinta coluna tabela 
+        int musicaId = (int) tabelaMusicas.getValueAt(selectedRow, 4);
+
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Deseja realmente remover a música da playlist?",
+            "Confirmar remoção",
+            javax.swing.JOptionPane.YES_NO_OPTION
+        );
+            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                boolean sucesso = playlistMusicaController.removerMusica(playlistId, musicaId);
+                if (sucesso) {
+                    carregarMusicasDaPlaylist();
+                    javax.swing.JOptionPane.showMessageDialog(this, "Música removida da playlist!");
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Erro ao remover música da playlist.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            }
     }//GEN-LAST:event_excluirBotaoActionPerformed
 
     private void addMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMusicaActionPerformed
