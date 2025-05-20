@@ -10,6 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * DAO responsável pelas operações de persistência da entidade Artista.
+ * Permite salvar, atualizar, remover, buscar por ID, buscar todos, buscar por gênero
+ * e buscar por nome artístico os artistas do sistema.
  *
  * @author Masashi
  */
@@ -17,6 +20,9 @@ public class ArtistaDAO {
     protected Connection conn;
     protected static final Logger LOGGER = Logger.getLogger(ArtistaDAO.class.getName());
 
+    /**
+     * Construtor padrão. Inicializa a conexão com o banco de dados.
+     */
     public ArtistaDAO() {
         try {
             this.conn = ConnectionBD.getInstance().getConnection();
@@ -25,7 +31,13 @@ public class ArtistaDAO {
             this.conn = null; }
     }
 
-    
+    /**
+     * Salva um novo artista no banco de dados, criando também uma entrada em pessoa.
+     * O ID gerado para a pessoa será o mesmo para o artista.
+     *
+     * @param a Objeto Artista a ser salvo.
+     * @return O objeto salvo (com ID atualizado), ou null em caso de erro.
+     */
     public Artista save(Artista a) {
         if (this.conn == null) {
             LOGGER.severe("Operação save não pode ser executada: conexão com banco de dados indisponível.");
@@ -86,7 +98,13 @@ public class ArtistaDAO {
             }
         }
     }
-
+    
+/**
+     * Atualiza os dados de um artista no banco de dados.
+     *
+     * @param a Objeto Artista com as informações atualizadas.
+     * @return O objeto atualizado, ou null em caso de erro.
+     */
     public Artista update(Artista a) {
         if (this.conn == null) {
             LOGGER.severe("Operação update não pode ser executada: conexão com banco de dados indisponível.");
@@ -132,7 +150,12 @@ public class ArtistaDAO {
         }
     }
 
- 
+ /**
+     * Remove um artista do banco de dados, excluindo também a pessoa associada.
+     *
+     * @param id ID do artista a ser removido.
+     * @return true se foi removido com sucesso, false caso contrário.
+     */
     public boolean delete(int id) {
         if (this.conn == null) {
             LOGGER.severe("Operação delete não pode ser executada: conexão com banco de dados indisponível.");
@@ -174,8 +197,13 @@ public class ArtistaDAO {
             }
         }
     }
-
     
+    /**
+     * Busca um artista pelo seu ID.
+     *
+     * @param id ID do artista.
+     * @return O artista encontrado, ou null se não existir.
+     */
     public Artista findById(int id) {
         if (this.conn == null) {
             LOGGER.severe("Operação findById não pode ser executada: conexão com banco de dados indisponível.");
@@ -203,7 +231,11 @@ public class ArtistaDAO {
         }
     }
 
-    
+    /**
+     * Busca todos os artistas do banco de dados.
+     *
+     * @return Lista com todos os artistas cadastrados.
+     */
     public List<Artista> findAll() {
         if (this.conn == null) {
             LOGGER.severe("Operação findAll não pode ser executada: conexão com banco de dados indisponível.");
@@ -232,7 +264,12 @@ public class ArtistaDAO {
         return lista;
     }
 
-    
+    /**
+     * Busca artistas pelo gênero musical.
+     *
+     * @param genero Gênero a ser pesquisado.
+     * @return Lista de artistas desse gênero.
+     */
     public List<Artista> findByGenero(String genero) {
         if (this.conn == null) {
             LOGGER.severe("Operação findByGenero não pode ser executada: conexão com banco de dados indisponível.");
@@ -264,7 +301,12 @@ public class ArtistaDAO {
         return lista;
     }
 
-   
+    /**
+     * Busca um artista pelo nome artístico (case insensitive, sem acento).
+     *
+     * @param nomeArtistico Nome artístico do artista.
+     * @return Artista encontrado, ou null se não existir.
+     */
     public Artista findByNomeArtistico(String nomeArtistico) {
         if (this.conn == null) {
             LOGGER.severe("Operação findByNomeArtistico não pode ser executada: conexão com banco de dados indisponível.");
@@ -293,7 +335,12 @@ public class ArtistaDAO {
         }
     }
 
-   
+    /**
+     * Converte um ResultSet em um objeto Artista.
+     *
+     * @param rs ResultSet contendo os dados do artista.
+     * @return Objeto Artista preenchido, ou null em caso de erro.
+     */
     private Artista converteParaArtista(ResultSet rs) {
         try {
             int    id             = rs.getInt("id");
@@ -306,7 +353,10 @@ public class ArtistaDAO {
             return null; 
         }
     }
-
+    
+    /**
+     * Fecha a conexão com o banco de dados.
+     */
     public void closeConnection() {
         if (this.conn != null) {
             try {
