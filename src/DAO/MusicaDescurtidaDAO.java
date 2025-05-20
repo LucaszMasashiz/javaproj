@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import connection.ConnectionBD;
@@ -13,14 +9,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Masashi
- */
+
 public class MusicaDescurtidaDAO {
     protected Connection conn;
     protected static final Logger LOGGER = Logger.getLogger(MusicaDescurtidaDAO.class.getName());
 
+    
     public MusicaDescurtidaDAO() {
         try {
             this.conn = ConnectionBD.getInstance().getConnection();
@@ -30,6 +24,7 @@ public class MusicaDescurtidaDAO {
         }
     }
 
+    
     public MusicaDescurtida save(MusicaDescurtida descurtida) {
         if (this.conn == null) {
             LOGGER.severe("Conexão indisponível.");

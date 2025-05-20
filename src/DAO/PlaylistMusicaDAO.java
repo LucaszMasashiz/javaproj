@@ -9,10 +9,21 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * DAO responsável pelo gerenciamento da relação entre playlists e músicas.
+ * Opera sobre a tabela playlist_musica e realiza ações de adicionar, remover e consultar músicas em playlists.
+ *
+ * @author Masashi
+ */
+
 public class PlaylistMusicaDAO {
     protected Connection conn;
     protected static final Logger LOGGER = Logger.getLogger(PlaylistMusicaDAO.class.getName());
-
+    
+/**
+* Construtor. Inicializa a conexão com o banco de dados.
+*/
+    
     public PlaylistMusicaDAO() {
         try {
             this.conn = ConnectionBD.getInstance().getConnection();
@@ -22,7 +33,13 @@ public class PlaylistMusicaDAO {
         }
     }
 
-
+/**
+     * Adiciona uma música a uma playlist.
+     * 
+     * @param playlistId ID da playlist.
+     * @param musicaId ID da música.
+     * @return true se adicionou com sucesso, false caso contrário.
+     */
     public boolean addMusicaToPlaylist(int playlistId, int musicaId) {
         if (this.conn == null) {
             LOGGER.severe("Operação addMusicaToPlaylist não pode ser executada: conexão indisponível.");
@@ -40,7 +57,13 @@ public class PlaylistMusicaDAO {
         }
     }
 
-    
+    /**
+     * Remove uma música de uma playlist.
+     * 
+     * @param playlistId ID da playlist.
+     * @param musicaId ID da música.
+     * @return true se removeu com sucesso, false caso contrário.
+     */
     public boolean removeMusicaFromPlaylist(int playlistId, int musicaId) {
         if (this.conn == null) {
             LOGGER.severe("Operação removeMusicaFromPlaylist não pode ser executada: conexão indisponível.");
@@ -58,7 +81,12 @@ public class PlaylistMusicaDAO {
         }
     }
 
-    
+    /**
+     * Busca os IDs das músicas pertencentes a uma determinada playlist.
+     *
+     * @param playlistId ID da playlist.
+     * @return Lista de IDs das músicas encontradas.
+     */
     public List<Integer> findMusicasByPlaylistId(int playlistId) {
         if (this.conn == null) {
             LOGGER.severe("Operação findMusicasByPlaylistId não pode ser executada: conexão indisponível.");
@@ -78,7 +106,13 @@ public class PlaylistMusicaDAO {
         }
         return musicas;
     }
-
+    
+/**
+     * Busca os IDs das músicas de uma playlist a partir do nome da playlist (ignorando maiúsculas/minúsculas).
+     *
+     * @param nomePlaylist Nome da playlist.
+     * @return Lista de IDs das músicas encontradas.
+     */
     public List<Integer> findMusicasByPlaylistNome(String nomePlaylist) {
     if (this.conn == null) {
         LOGGER.severe("Operação findMusicasByPlaylistNome não pode ser executada: conexão indisponível.");
@@ -101,6 +135,12 @@ public class PlaylistMusicaDAO {
     }
     return musicas;
 }
+    
+/**
+* Retorna todas as relações playlist-música presentes no banco.
+*
+* @return Lista de objetos PlaylistMusica.
+*/
     
     public List<PlaylistMusica> findAll() {
         if (this.conn == null) {
