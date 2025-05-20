@@ -1,4 +1,3 @@
-
 package view;
 
 import controller.UsuarioController;
@@ -9,13 +8,17 @@ import view.Cadastro;
 
    
 /**
- *
+ * Tela de Login do sistema Spotifei.
+ * Permite ao usuário autenticar-se utilizando e-mail e senha ou navegar até a tela de cadastro.
+ * 
  * @author Masashi
  */
 public class Login extends javax.swing.JFrame {
     private UsuarioController usuarioController = new UsuarioController();
+    
     /**
-     * Creates new form Login
+     * Cria uma nova tela de Login, inicializando os componentes gráficos e
+     * definindo a cor de fundo.
      */
     public Login() {
         initComponents();
@@ -133,6 +136,15 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Evento acionado ao clicar no botão "Login".
+     * Realiza autenticação do usuário com base no e-mail e senha informados.
+     * Em caso de sucesso, abre a tela principal (Home) e salva usuário na sessão.
+     * Caso falhe, exibe mensagem de erro.
+     * 
+     * @param evt Evento de clique do botão.
+     */
+
     private void botaoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLoginActionPerformed
         String email = emailLogin.getText();
         String senha = new String(senhaLogin.getPassword());
@@ -160,6 +172,12 @@ public class Login extends javax.swing.JFrame {
             this.dispose();
     }//GEN-LAST:event_botaoLoginActionPerformed
 
+    /**
+     * Evento acionado ao clicar no botão "Faça Seu Cadastro".
+     * Direciona o usuário para a tela de cadastro, fechando a tela de login.
+     * 
+     * @param evt Evento de clique do botão.
+     */
     private void irProCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irProCadastroActionPerformed
         Cadastro tela = new Cadastro();
             tela.setLocationRelativeTo(null); 
@@ -168,7 +186,9 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_irProCadastroActionPerformed
 
     /**
-     * @param args the command line arguments
+     * Método principal para iniciar a tela de Login.
+     * 
+     * @param args Argumentos da linha de comando.
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
