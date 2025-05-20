@@ -9,12 +9,19 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * DAO responsável pelas operações de persistência relacionadas a músicas descurtidas (MusicaDescurtida).
+ * Permite salvar, remover, buscar e verificar descurtidas no banco de dados.
+ * 
+ * @author Masashi
+ */
 public class MusicaDescurtidaDAO {
     protected Connection conn;
     protected static final Logger LOGGER = Logger.getLogger(MusicaDescurtidaDAO.class.getName());
 
-    
+     /**
+     * Construtor padrão. Inicializa a conexão com o banco de dados.
+     */
     public MusicaDescurtidaDAO() {
         try {
             this.conn = ConnectionBD.getInstance().getConnection();
@@ -24,7 +31,12 @@ public class MusicaDescurtidaDAO {
         }
     }
 
-    
+    /**
+     * Salva uma nova descurtida no banco de dados, se ainda não existir.
+     * 
+     * @param descurtida Objeto MusicaDescurtida a ser salvo.
+     * @return O objeto MusicaDescurtida salvo (com ID), ou null se já existe ou em caso de erro.
+     */
     public MusicaDescurtida save(MusicaDescurtida descurtida) {
         if (this.conn == null) {
             LOGGER.severe("Conexão indisponível.");
@@ -48,6 +60,13 @@ public class MusicaDescurtidaDAO {
         }
     }
 
+    /**
+     * Remove uma descurtida do banco de dados para o usuário e música informados.
+     * 
+     * @param usuarioId ID do usuário.
+     * @param musicaId ID da música.
+     * @return true se removido com sucesso, false em caso de erro.
+     */
     public boolean delete(int usuarioId, int musicaId) {
         if (this.conn == null) {
             LOGGER.severe("Conexão indisponível.");
@@ -65,6 +84,12 @@ public class MusicaDescurtidaDAO {
         }
     }
 
+    /**
+     * Busca todas as músicas descurtidas por um determinado usuário.
+     * 
+     * @param usuarioId ID do usuário.
+     * @return Lista de objetos MusicaDescurtida encontrados.
+     */
     public List<MusicaDescurtida> findByUsuarioId(int usuarioId) {
         if (this.conn == null) {
             LOGGER.severe("Conexão indisponível.");
@@ -89,6 +114,13 @@ public class MusicaDescurtidaDAO {
         return lista;
     }
 
+    /**
+     * Verifica se uma determinada música já foi descurtida por um usuário.
+     * 
+     * @param usuarioId ID do usuário.
+     * @param musicaId ID da música.
+     * @return true se já descurtida, false caso contrário.
+     */
     public boolean isDescurtida(int usuarioId, int musicaId) {
         if (this.conn == null) {
             LOGGER.severe("Conexão indisponível.");
