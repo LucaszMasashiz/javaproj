@@ -7,10 +7,19 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * DAO responsável pelas operações de persistência do histórico de buscas dos usuários.
+ * Permite salvar, remover e buscar históricos associados a cada usuário.
+ * 
+ * @author Masashi
+ */
 public class HistoricoDAO {
     protected Connection conn;
     protected static final Logger LOGGER = Logger.getLogger(HistoricoDAO.class.getName());
 
+    /**
+     * Construtor padrão. Inicializa a conexão com o banco de dados.
+     */
     public HistoricoDAO() {
         try {
             this.conn = ConnectionBD.getInstance().getConnection();
@@ -20,6 +29,12 @@ public class HistoricoDAO {
         }
     }
 
+    /**
+     * Salva um novo histórico de busca no banco de dados.
+     *
+     * @param historico Objeto Historico contendo o usuário e o termo buscado.
+     * @return O objeto salvo (com ID atualizado), ou null em caso de erro.
+     */
     public Historico save(Historico historico) {
         if (this.conn == null) {
             LOGGER.severe("Conexão com o banco indisponível (save historico).");
@@ -46,6 +61,12 @@ public class HistoricoDAO {
         }
     }
     
+    /**
+     * Remove um histórico de busca do banco de dados pelo seu ID.
+     *
+     * @param id ID do histórico a ser removido.
+     * @return true se foi removido com sucesso, false caso contrário.
+     */
     public boolean delete(int id) {
     if (this.conn == null) {
         LOGGER.severe("Conexão com o banco indisponível (delete historico).");
@@ -62,7 +83,12 @@ public class HistoricoDAO {
     }
 }
 
-
+/**
+     * Busca todos os históricos de busca associados a um usuário.
+     *
+     * @param usuarioId ID do usuário.
+     * @return Lista de históricos encontrados. Retorna lista vazia se não houver ou em caso de erro.
+     */
     public List<Historico> findByUsuarioId(int usuarioId) {
         if (this.conn == null) {
             LOGGER.severe("Conexão com o banco indisponível (buscar historico).");
