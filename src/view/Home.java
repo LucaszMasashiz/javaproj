@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.ArtistaController;
@@ -16,8 +12,14 @@ import manager.ManagerSession;
 import model.MusicaCurtida;
 import model.Usuario;
 
+
 /**
- *
+ * Tela principal (Home) do Spotifei.
+ * 
+ * Permite buscas de músicas, visualização de resultados, navegação para playlists e histórico,
+ * além de curtir músicas diretamente pela interface.
+ * Exibe saudação ao usuário autenticado.
+ * 
  * @author Masashi
  */
 public class Home extends javax.swing.JFrame {
@@ -27,7 +29,9 @@ public class Home extends javax.swing.JFrame {
     private ArtistaController artistaController = new ArtistaController();
     Usuario usuarioAutenticado = null;
     
-   
+   /**
+     * Cria a tela Home do Spotifei, inicializa componentes e mostra mensagem de boas-vindas.
+     */
     public Home() {
         initComponents();
         usuarioAutenticado = ManagerSession.getInstance().getCurrentUser();
@@ -194,6 +198,13 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Evento do botão "Buscar".
+     * Realiza busca por nome de música, gênero ou artista e atualiza a tabela com os resultados.
+     * Salva o termo de busca no histórico do usuário.
+     *
+     * @param evt Evento do clique do botão.
+     */
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
         String busca = buscarHome.getText().trim();
         if (busca.isEmpty()) {
@@ -246,14 +257,25 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoBuscarActionPerformed
     
 
-    
+    /**
+     * Evento do botão "Playlists".
+     * Abre a tela de Playlists e fecha a tela Home.
+     * 
+     * @param evt Evento do clique do botão.
+     */
     private void botaoPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPlaylistActionPerformed
         VPlaylist tela = new VPlaylist();
             tela.setLocationRelativeTo(null); 
             tela.setVisible(true);
             this.dispose();
     }//GEN-LAST:event_botaoPlaylistActionPerformed
-
+    
+    /**
+     * Evento do botão "Histórico".
+     * Abre a tela de Histórico e fecha a tela Home.
+     * 
+     * @param evt Evento do clique do botão.
+     */
     private void botaoHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoHistoricoActionPerformed
         Historico tela = new Historico();
             tela.setLocationRelativeTo(null); 
@@ -261,6 +283,12 @@ public class Home extends javax.swing.JFrame {
             this.dispose();
     }//GEN-LAST:event_botaoHistoricoActionPerformed
 
+    /**
+     * Evento do botão "Curtir".
+     * Adiciona a música selecionada à lista de músicas curtidas do usuário.
+     * 
+     * @param evt Evento do clique do botão.
+     */
     private void curtirMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_curtirMusicaActionPerformed
     int selectedRow = tabelaHome.getSelectedRow();
         if (selectedRow == -1) {
@@ -290,8 +318,11 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_curtirMusicaActionPerformed
 
     /**
-     * @param args the command line arguments
+     * Método principal. Inicia a aplicação e exibe a tela Home.
+     * 
+     * @param args Argumentos da linha de comando.
      */
+     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
