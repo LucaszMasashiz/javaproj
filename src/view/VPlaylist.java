@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.PlaylistController;
@@ -13,8 +9,11 @@ import model.Playlist;
 import model.Usuario;
 import view.VPlaylistMusica;
 
+
 /**
- *
+ * Tela responsável pela visualização, criação, exclusão e acesso às playlists do usuário.
+ * Permite listar playlists, criar novas, excluir e entrar em playlists existentes.
+ * 
  * @author Masashi
  */
 public class VPlaylist extends javax.swing.JFrame {
@@ -22,6 +21,10 @@ public class VPlaylist extends javax.swing.JFrame {
     protected PlaylistController playlistController = new PlaylistController();
     Usuario usuarioAutenticado = null;
     
+    /**
+     * Construtor da tela de playlists.
+     * Inicializa os componentes, obtém usuário autenticado e atualiza a tabela de playlists.
+     */
     public VPlaylist() {
         initComponents();
         usuarioAutenticado = ManagerSession.getInstance().getCurrentUser();
@@ -240,10 +243,17 @@ public class VPlaylist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void tabelaPlaylistAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabelaPlaylistAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_tabelaPlaylistAncestorAdded
 
+    /**
+     * Evento de ação para excluir a playlist selecionada na tabela.
+     * Solicita confirmação do usuário antes de deletar.
+     * 
+     * @param evt Evento de clique no botão "Excluir".
+     */
     private void excluirPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirPlaylistActionPerformed
         int selectedRow = tabelaPlaylist.getSelectedRow();
     if (selectedRow == -1) {
@@ -264,6 +274,7 @@ public class VPlaylist extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_excluirPlaylistActionPerformed
 
+    
     private void criarPlaylistTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarPlaylistTextActionPerformed
         String nomePlaylist = criarPlaylistText.getText().trim();
     if (!nomePlaylist.isEmpty()) {
@@ -280,6 +291,12 @@ public class VPlaylist extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_criarPlaylistTextActionPerformed
 
+    /**
+     * Evento de ação para criar uma nova playlist.
+     * Lê o nome digitado, chama o controller e atualiza a lista.
+     * 
+     * @param evt Evento de clique no botão "Criar Playlist".
+     */
     private void criarPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarPlaylistActionPerformed
         String nomePlaylist = criarPlaylistText.getText().trim();
     if (!nomePlaylist.isEmpty()) {
@@ -296,6 +313,9 @@ public class VPlaylist extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Atualiza a tabela exibindo todas as playlists do usuário autenticado.
+     */
     private void atualizarTabelaPlaylists() {
         List<model.Playlist> playlists = playlistController.listarPorUsuario(usuarioId);
         DefaultTableModel model = (DefaultTableModel) tabelaPlaylist.getModel();
@@ -306,10 +326,17 @@ public class VPlaylist extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_criarPlaylistActionPerformed
 
+    
     private void entrarPlaylistTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarPlaylistTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_entrarPlaylistTextActionPerformed
 
+    /**
+     * Evento de ação para acessar uma playlist pelo nome informado.
+     * Abre a tela de músicas da playlist selecionada.
+     * 
+     * @param evt Evento de clique no botão "Entrar".
+     */
     private void entrarPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarPlaylistActionPerformed
         String nomePlaylist = entrarPlaylistText.getText().trim();
             if (nomePlaylist.isEmpty()) {
@@ -328,6 +355,11 @@ public class VPlaylist extends javax.swing.JFrame {
 
     }//GEN-LAST:event_entrarPlaylistActionPerformed
 
+    /**
+     * Evento de ação para voltar à tela principal (Home).
+     * 
+     * @param evt Evento de clique no botão "Voltar".
+     */
     private void voltarHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarHomeActionPerformed
         Home tela = new Home();
             tela.setLocationRelativeTo(null); 
@@ -336,7 +368,9 @@ public class VPlaylist extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarHomeActionPerformed
 
     /**
-     * @param args the command line arguments
+     * Método principal para iniciar a tela de playlists.
+     * 
+     * @param args Argumentos da linha de comando.
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
