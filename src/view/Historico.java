@@ -30,6 +30,7 @@ public class Historico extends javax.swing.JFrame {
         carregarDescurtidas();
         Component listaCurtidas = new javax.swing.JList<>();
         JScrollPane jScrollPaneCurtidas = new javax.swing.JScrollPane(listaCurtidas);
+        getContentPane().setBackground(new java.awt.Color(96, 125, 139));
     }
     private void carregarHistorico() {
         DefaultListModel<String> model = new DefaultListModel<>();

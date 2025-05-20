@@ -245,7 +245,7 @@ public class PlaylistDAO {
             LOGGER.severe("Operação findByUsuarioIdAndNome não pode ser executada: conexão indisponível.");
             return null;
         }
-        String sql = "SELECT id, usuario_id, nome FROM playlist WHERE usuario_id = ? AND nome = ?";
+        String sql = "SELECT id, usuario_id, nome FROM playlist WHERE usuario_id = ? AND nome ILIKE ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, usuarioId);
             ps.setString(2, nome);

@@ -19,11 +19,9 @@ import model.Usuario;
  */
 public class Cadastro extends javax.swing.JFrame {
      
-    /**
-     * Creates new form Cadastro
-     */
     public Cadastro() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(96, 125, 139));
     }
 
     /**

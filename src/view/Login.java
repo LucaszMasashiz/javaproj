@@ -19,6 +19,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(96, 125, 139));
     }
 
     /**

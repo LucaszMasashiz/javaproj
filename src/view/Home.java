@@ -27,13 +27,12 @@ public class Home extends javax.swing.JFrame {
     private ArtistaController artistaController = new ArtistaController();
     Usuario usuarioAutenticado = null;
     
-    /**
-     * Creates new form Home
-     */
+   
     public Home() {
         initComponents();
         usuarioAutenticado = ManagerSession.getInstance().getCurrentUser();
         bemvindo.setText("Bem-vindo, " + usuarioAutenticado.getNome());
+        getContentPane().setBackground(new java.awt.Color(96, 125, 139));
     }
 
     /**
