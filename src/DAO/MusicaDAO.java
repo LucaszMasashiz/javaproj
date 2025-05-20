@@ -1,4 +1,3 @@
-
 package DAO;
 
 import connection.ConnectionBD;
@@ -10,11 +9,19 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * DAO responsável pelas operações de persistência relacionadas à entidade Musica.
+ * Permite salvar, atualizar, remover, buscar e listar músicas no banco de dados.
+ * 
+ * @author Masashi
+ */
 public class MusicaDAO {
     protected Connection conn;
     protected static final Logger LOGGER = Logger.getLogger(MusicaDAO.class.getName());
 
+    /**
+     * Construtor padrão. Inicializa a conexão com o banco de dados.
+     */
     public MusicaDAO() {
         try {
             this.conn = ConnectionBD.getInstance().getConnection();
@@ -24,6 +31,12 @@ public class MusicaDAO {
         }
     }
 
+    /**
+     * Salva uma nova música no banco de dados.
+     * 
+     * @param m Objeto Musica a ser salvo.
+     * @return O objeto Musica salvo (com ID atualizado), ou null em caso de erro.
+     */
     public Musica save(Musica m) {
         if (this.conn == null) {
             LOGGER.severe("Operação save (Musica) não pode ser executada: conexão com banco de dados indisponível.");
@@ -64,6 +77,12 @@ public class MusicaDAO {
       
     }
 
+    /**
+     * Atualiza uma música existente no banco de dados.
+     * 
+     * @param m Objeto Musica com as informações a serem atualizadas.
+     * @return O objeto Musica atualizado, ou null em caso de erro.
+     */
     public Musica update(Musica m) {
         if (this.conn == null) {
             LOGGER.severe("Operação update (Musica) não pode ser executada: conexão indisponível.");
@@ -93,6 +112,12 @@ public class MusicaDAO {
         }
     }
 
+    /**
+     * Remove uma música do banco de dados.
+     * 
+     * @param id ID da música a ser removida.
+     * @return true se a música foi removida, false caso contrário.
+     */
     public boolean delete(int id) {
         if (this.conn == null) {
             LOGGER.severe("Operação delete (Musica) não pode ser executada: conexão indisponível.");
@@ -111,6 +136,12 @@ public class MusicaDAO {
         }
     }
 
+    /**
+     * Busca uma música pelo seu ID.
+     * 
+     * @param id ID da música.
+     * @return Objeto Musica encontrado, ou null se não existir.
+     */
     public Musica findById(int id) {
         if (this.conn == null) {
             LOGGER.severe("Operação findById (Musica) não pode ser executada: conexão indisponível.");
@@ -133,6 +164,11 @@ public class MusicaDAO {
         }
     }
 
+    /**
+     * Lista todas as músicas do banco de dados.
+     * 
+     * @return Lista de objetos Musica encontrados.
+     */
     public List<Musica> findAll() {
         if (this.conn == null) {
             LOGGER.severe("Operação findAll (Musica) não pode ser executada: conexão indisponível.");
@@ -157,6 +193,12 @@ public class MusicaDAO {
         return lista;
     }
 
+    /**
+     * Busca músicas por ID do artista.
+     * 
+     * @param artistaId ID do artista.
+     * @return Lista de músicas associadas ao artista.
+     */
     public List<Musica> findByArtistaId(int artistaId) {
         if (this.conn == null) {
             LOGGER.severe("Operação findByArtistaId (Musica) não pode ser executada: conexão indisponível.");
@@ -183,6 +225,12 @@ public class MusicaDAO {
         return lista;
     }
      
+    /**
+     * Busca músicas por gênero.
+     * 
+     * @param genero Gênero da música (busca parcial, case-insensitive).
+     * @return Lista de músicas do gênero informado.
+     */
     public List<Musica> findByGenero(String genero) {
         if (this.conn == null) {
             LOGGER.severe("Operação findByGenero (Musica) não pode ser executada: conexão indisponível.");
@@ -209,6 +257,12 @@ public class MusicaDAO {
         return lista;
     }
     
+    /**
+     * Busca músicas por nome (busca parcial, case-insensitive).
+     * 
+     * @param nome Nome ou parte do nome da música.
+     * @return Lista de músicas que correspondem ao nome informado.
+     */
     public List<Musica> findByNome(String nome) {
     if (this.conn == null) {
         LOGGER.severe("Operação findByNome (Musica) não pode ser executada: conexão indisponível.");
@@ -232,7 +286,13 @@ public class MusicaDAO {
     }
     return lista;
 }
-
+    
+/**
+     * Converte um ResultSet em um objeto Musica.
+     * 
+     * @param rs ResultSet contendo os dados da música.
+     * @return Objeto Musica populado, ou null em caso de erro.
+     */
     private Musica converteParaMusica(ResultSet rs) {
         try {
             int id = rs.getInt("id");
@@ -248,7 +308,9 @@ public class MusicaDAO {
     }
     
     
-    
+    /**
+     * Fecha a conexão do DAO com o banco de dados.
+     */
     public void closeConnection() {
         if (this.conn != null) {
             try {
