@@ -14,13 +14,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Classe DAO responsável pelas operações de persistência de Usuário no banco de dados.
+ * Utiliza conexão com tabelas 'pessoa' e 'usuario'.
+ * 
  * @author Masashi
  */
 public class UsuarioDAO {
     protected Connection conn;
     protected static final Logger LOGGER = Logger.getLogger(UsuarioDAO.class.getName());
 
+    /**
+     * Construtor. Inicializa a conexão com o banco de dados.
+     */
     public UsuarioDAO() {
         try {
             this.conn = ConnectionBD.getInstance().getConnection();
@@ -30,7 +35,12 @@ public class UsuarioDAO {
         }
     }
 
-    
+    /**
+     * Salva um novo usuário no banco de dados.
+     * 
+     * @param u Objeto Usuario a ser salvo.
+     * @return O usuário salvo com ID preenchido, ou null em caso de erro.
+     */
     public Usuario save(Usuario u) {
         if (this.conn == null) {
             LOGGER.severe("Operação save (Usuario) não pode ser executada: conexão com banco de dados indisponível.");
@@ -91,7 +101,12 @@ public class UsuarioDAO {
             }
         }
     }
-
+     /**
+     * Atualiza os dados de um usuário no banco de dados.
+     * 
+     * @param u Objeto Usuario com os novos dados.
+     * @return O usuário atualizado, ou null em caso de erro.
+     */
     public Usuario update(Usuario u) {
         if (this.conn == null) {
             LOGGER.severe("Operação update (Usuario) não pode ser executada: conexão indisponível.");
@@ -140,6 +155,12 @@ public class UsuarioDAO {
         }
     }
 
+      /**
+     * Remove um usuário do banco de dados pelo seu ID.
+     * 
+     * @param id ID do usuário a ser removido.
+     * @return true se excluiu, false em caso de erro.
+     */
     public boolean delete(int id) {
         if (this.conn == null) {
             LOGGER.severe("Operação delete (Usuario) não pode ser executada: conexão indisponível.");
@@ -185,6 +206,12 @@ public class UsuarioDAO {
         }
     }
 
+    /**
+     * Busca um usuário pelo ID.
+     * 
+     * @param id ID do usuário.
+     * @return O usuário correspondente ou null se não encontrado.
+     */
     public Usuario findById(int id) {
         if (this.conn == null) {
             LOGGER.severe("Operação findById (Usuario) não pode ser executada: conexão indisponível.");
@@ -211,7 +238,12 @@ public class UsuarioDAO {
             return null;
         }
     }
-
+ /**
+     * Busca um usuário pelo e-mail.
+     * 
+     * @param email E-mail do usuário.
+     * @return O usuário correspondente ou null se não encontrado.
+     */
     public Usuario findByEmail(String email) {
         if (this.conn == null) {
             LOGGER.severe("Operação findByEmail (Usuario) não pode ser executada: conexão indisponível.");
@@ -238,7 +270,11 @@ public class UsuarioDAO {
             return null;
         }
     }
-
+ /**
+     * Lista todos os usuários cadastrados.
+     * 
+     * @return Lista de usuários.
+     */
     public List<Usuario> findAll() {
         if (this.conn == null) {
             LOGGER.severe("Operação findAll (Usuario) não pode ser executada: conexão indisponível.");
@@ -266,7 +302,13 @@ public class UsuarioDAO {
         }
         return lista;
     }
-
+   // Métodos privados/montagem de objeto...
+    /**
+     * Converte um ResultSet em um objeto Usuario.
+     * 
+     * @param rs ResultSet proveniente de uma consulta SQL.
+     * @return Instância de Usuario ou null em caso de erro.
+     */
     private Usuario converteParaUsuario(ResultSet rs) {
         try {
             int id = rs.getInt("id");
@@ -279,7 +321,9 @@ public class UsuarioDAO {
             return null;
         }
     }
-
+   /**
+     * Fecha a conexão com o banco de dados, se aberta.
+     */
     public void closeConnection() {
         if (this.conn != null) {
             try {
@@ -290,6 +334,14 @@ public class UsuarioDAO {
             }
         }
     }
+    
+      /**
+     * Autentica um usuário pelo e-mail e senha.
+     * 
+     * @param email E-mail do usuário.
+     * @param senha Senha do usuário.
+     * @return O usuário autenticado ou null se não autenticado.
+     */
     public Usuario authenticate(String email, String senha) {
     if (this.conn == null) {
         LOGGER.severe("Operação authenticate (Usuario) não pode ser executada: conexão indisponível.");
