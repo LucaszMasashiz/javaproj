@@ -5,7 +5,6 @@ import java.sql.Connection;
 import connection.ConnectionBD;
 import java.lang.System.Logger;
 import javax.swing.JOptionPane;
-import static junit.runner.Version.id;
 import java.sql.SQLException;
 import model.Usuario;
 
